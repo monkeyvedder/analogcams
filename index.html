@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cámaras analógicas</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-body: #111111;
+            --bg-surface: #1c1c1c;
+            --bg-hover: #2a2a2a;
+            --border: #333;
+            --text-main: #e5e5e5;
+            --text-muted: #888;
+            --accent: #3b82f6;
+            
+            --ok-bg: rgba(16, 185, 129, 0.15); --ok-tx: #6ee7b7;
+            --warn-bg: rgba(245, 158, 11, 0.15); --warn-tx: #fcd34d;
+            --err-bg: rgba(239, 68, 68, 0.15); --err-tx: #fca5a5;
+            --pend-bg: rgba(139, 92, 246, 0.15); --pend-tx: #c4b5fd;
+        }
+
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            padding: clamp(12px, 3vw, 20px);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .container { max-width: 1400px; margin: 0 auto; }
+
+        /* Header y Filtros */
+        .header-controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            background: var(--bg-surface);
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        h1 { 
+            margin-right: auto; 
+            font-size: clamp(1rem, 2.5vw, 1.2rem); 
+            font-weight: 600; 
+            letter-spacing: -0.5px; 
+        }
+
+        input, select, .btn {
+            background: var(--bg-body);
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s, background-color 0.2s;
+        }
+        
+        input:focus, select:focus, .btn:focus { 
+            border-color: var(--accent); 
+            outline: 2px solid transparent;
+        }
+        
+        .search-box { min-width: min(250px, 100%); }
+
+        .btn { cursor: pointer; }
+        .btn:hover { background: var(--bg-hover); }
+
+        /* Tabla */
+        .table-wrapper {
+            overflow-x: auto;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: var(--bg-surface);
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.3);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            white-space: nowrap; 
+        }
+
+        thead {
+            background: #252525;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        th {
+            text-align: left;
+            padding: 12px 16px;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            font-weight: 600;
+            cursor: pointer;
+            user-select: none;
+            transition: color 0.2s, background-color 0.2s;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th:hover, th:focus-visible { color: var(--text-main); background: #333; }
+        th:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+        
+        th .sort-icon { margin-left: 5px; opacity: 0.3; font-size: 10px; }
+        th.active { color: var(--accent); }
+        th.active .sort-icon { opacity: 1; }
+
+        td {
+            padding: 10px 16px;
+            border-bottom: 1px solid var(--border);
+            color: #d4d4d4;
+        }
+
+        tbody tr:last-child td { border-bottom: none; }
+        tbody tr:hover { background-color: var(--bg-hover); }
+
+        .col-brand { font-weight: 600; color: #fff; }
+        .col-model { font-weight: 500; }
+        .col-serial { 
+            font-family: 'JetBrains Mono', monospace; 
+            font-size: 0.85rem; 
+            color: var(--text-muted);
+        }
+        .col-notes { 
+            white-space: normal;
+            color: #999;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            min-width: 300px;
+            max-width: 400px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        .st-ok { background: var(--ok-bg); color: var(--ok-tx); }
+        .st-warn { background: var(--warn-bg); color: var(--warn-tx); }
+        .st-err { background: var(--err-bg); color: var(--err-tx); }
+        .st-pend { background: var(--pend-bg); color: var(--pend-tx); }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-muted);
+        }
+
+        /* Animación sutil al cargar filas */
+        @media (prefers-reduced-motion: no-preference) {
+            tbody tr {
+                animation: fadeIn 0.2s ease-out;
+            }
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(-4px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-controls { flex-direction: column; align-items: stretch; }
+            h1 { margin-right: 0; margin-bottom: 10px; text-align: center; }
+            .search-box { min-width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header class="header-controls">
+        <h1>📷 Colección (<span id="countDisplay" role="status" aria-live="polite">0</span>)</h1>
+        
+        <input type="search" id="searchInput" class="search-box" placeholder="Buscar..." aria-label="Buscar cámaras">
+        
+        <select id="brandFilter" aria-label="Filtrar por marca">
+            <option value="all">Todas las Marcas</option>
+        </select>
+
+        <select id="statusFilter" aria-label="Filtrar por estado">
+            <option value="all">Todos los Estados</option>
+            <option value="ok">🟢 Funcional</option>
+            <option value="warning">⚠️ Detalles</option>
+            <option value="error">🔴 Reparar</option>
+            <option value="pending">⏳ Pendiente</option>
+        </select>
+
+        <select id="speedsFilter" aria-label="Filtrar por velocidades">
+            <option value="all">Todas las Velocidades</option>
+            <option value="ok">✅ Correctas</option>
+            <option value="bad">❌ Fallan</option>
+            <option value="unknown">➖ N/D</option>
+        </select>
+
+        <select id="filmFilter" aria-label="Filtrar por carrete">
+            <option value="all">Todos los Carretes</option>
+            <option value="yes">🎞️ Probado</option>
+            <option value="no">⏳ No probado</option>
+        </select>
+
+        <button type="button" id="resetBtn" class="btn" aria-label="Resetear todos los filtros">Reset</button>
+    </header>
+
+    <div class="table-wrapper">
+        <table role="grid" aria-label="Colección de cámaras analógicas">
+            <thead>
+                <tr>
+                    <th data-col="brand" tabindex="0" role="columnheader" aria-sort="ascending">Marca <span class="sort-icon" aria-hidden="true">⇅</span></th>
+                    <th data-col="model" tabindex="0" role="columnheader">Modelo <span class="sort-icon" aria-hidden="true">⇅</span></th>
+                    <th data-col="serial" tabindex="0" role="columnheader">Nº Serie <span class="sort-icon" aria-hidden="true">⇅</span></th>
+                    <th data-col="status" tabindex="0" role="columnheader">Estado <span class="sort-icon" aria-hidden="true">⇅</span></th>
+                    <th data-col="speeds" tabindex="0" role="columnheader">Velocidades <span class="sort-icon" aria-hidden="true">⇅</span></th>
+                    <th data-col="film" tabindex="0" role="columnheader">Carrete <span class="sort-icon" aria-hidden="true">⇅</span></th>
+                    <th data-col="notes" tabindex="0" role="columnheader">Observaciones <span class="sort-icon" aria-hidden="true">⇅</span></th>
+                </tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+(function() {
+    'use strict';
+
+    // ============================================
+    // DATOS (inmutables)
+    // ============================================
+    const CAMERAS = Object.freeze([
+        { brand: "Canon", model: "Canon A-1", serial: "1851141", status: "ok", speeds: "ok", film: "no", notes: "Velocidades rápidas: OK." },
+        { brand: "Canon", model: "Canon AE-1", serial: "4402114", status: "warning", speeds: "bad", film: "yes", notes: "Velocidades altas: fallan." },
+        { brand: "Canon", model: "Canon AE-1 Program", serial: "4634971", status: "error", speeds: "unknown", film: "no", notes: "Ruido mecánico: raro. Necesita reparación." },
+        { brand: "Canon", model: "Canon AE-1 Program", serial: "3613384", status: "warning", speeds: "bad", film: "no", notes: "Velocidades altas: fallan." },
+        { brand: "Canon", model: "Canon AE-1 Program", serial: "4645365", status: "warning", speeds: "ok", film: "no", notes: "Velocidades: correctas." },
+        { brand: "Canon", model: "Canon EOS 300", serial: "3140613", status: "ok", speeds: "ok", film: "yes", notes: "Funciona OK." },
+        { brand: "Canon", model: "Canon EOS 300v", serial: "72045395", status: "ok", speeds: "ok", film: "yes", notes: "Funciona OK." },
+        { brand: "Minolta", model: "Minolta X700", serial: "-", status: "warning", speeds: "ok", film: "no", notes: "Bloqueador modo A-P: falla. Velocidades: OK." },
+        { brand: "Minolta", model: "Minolta X700", serial: "-", status: "ok", speeds: "ok", film: "yes", notes: "Funciona OK." },
+        { brand: "Minolta", model: "Minolta XD 50th", serial: "-", status: "warning", speeds: "ok", film: "no", notes: "Velocidades: correctas." },
+        { brand: "Minolta", model: "Minolta Explorer", serial: "40805410", status: "warning", speeds: "unknown", film: "no", notes: "En teoría funciona bien." },
+        { brand: "Olympus", model: "Olympus AF1", serial: "-", status: "ok", speeds: "ok", film: "yes", notes: "En pruebas. Carrete Ilford FP4 Plus 36" },
+        { brand: "Olympus", model: "Olympus EE-2", serial: "4474773", status: "pending", speeds: "unknown", film: "yes", notes: "En teoría funciona bien." },
+        { brand: "Olympus", model: "Olympus OM-10", serial: "905715", status: "ok", speeds: "bad", film: "yes", notes: "Funciona, pero falla en velocidades altas." },
+        { brand: "Olympus", model: "Olympus OM-2", serial: "550463", status: "ok", speeds: "ok", film: "yes", notes: "Velocidades: correctas. (Ex dueño: un chaval)." },
+        { brand: "Olympus", model: "Olympus OM-2 (Val)", serial: "280275", status: "warning", speeds: "bad", film: "no", notes: "Velocidades altas: fallan." },
+        { brand: "Olympus", model: "Olympus OM-2 Spot", serial: "1086785", status: "warning", speeds: "bad", film: "no", notes: "Velocidades altas: fallan." },
+        { brand: "Olympus", model: "Olympus OM-2n (Cad)", serial: "921526", status: "warning", speeds: "bad", film: "no", notes: "Velocidades altas: fallan." },
+        { brand: "Olympus", model: "Olympus OM-2n (Ita)", serial: "973164", status: "error", speeds: "bad", film: "no", notes: "Obturador: bloqueado. Necesita reparación." },
+        { brand: "Olympus", model: "Olympus OM-2n (Ast)", serial: "693044", status: "warning", speeds: "bad", film: "no", notes: "Espejo: manchado. Velocidades altas: fallan." },
+        { brand: "Olympus", model: "Olympus OM-20", serial: "1177265", status: "warning", speeds: "bad", film: "no", notes: "Velocidades altas: fallan." },
+        { brand: "Olympus", model: "Olympus OM-30", serial: "1105702", status: "ok", speeds: "ok", film: "yes", notes: "Funciona OK." },
+        { brand: "Olympus", model: "Olympus OM-40 (Vic)", serial: "1259937", status: "warning", speeds: "ok", film: "yes", notes: "Modo P: no funciona. Modo A: OK. Velocidades: OK." },
+        { brand: "Pentax", model: "Pentax Espio 115V", serial: "4237198", status: "ok", speeds: "ok", film: "yes", notes: "En pruebas. Carrete Kodak Gold 200 36" },
+        { brand: "Pentax", model: "Pentax Program A", serial: "1495925", status: "warning", speeds: "ok", film: "no", notes: "Velocidades: correctas." },
+        { brand: "Pentax", model: "Pentax 17", serial: "9007488", status: "ok", speeds: "ok", film: "yes", notes: "En pruebas. Carrete Fujifilm 200 36" }
+    ]);
+
+    const CONFIG = Object.freeze({
+        status: {
+            ok:      { label: 'Funcional',   cssClass: 'st-ok' },
+            warning: { label: 'Detalles',    cssClass: 'st-warn' },
+            error:   { label: 'Reparar',     cssClass: 'st-err' },
+            pending: { label: 'Por Revelar', cssClass: 'st-pend' }
+        },
+        speeds: {
+            ok:      { label: 'Correctas', cssClass: 'st-ok' },
+            bad:     { label: 'Fallan',    cssClass: 'st-err' },
+            unknown: { label: 'N/D',       cssClass: 'st-pend' }
+        },
+        film: {
+            yes: { label: 'Probado',    cssClass: 'st-ok' },
+            no:  { label: 'No probado', cssClass: 'st-pend' }
+        },
+        defaults: { speeds: 'unknown', film: 'no' },
+        storageKey: 'cameraCollection.v2'
+    });
+
+    // ============================================
+    // UTILIDADES
+    // ============================================
+    const collator = new Intl.Collator('es', { sensitivity: 'base', numeric: true });
+    
+    const Utils = {
+        compareText: (a, b) => collator.compare(String(a ?? ''), String(b ?? '')),
+
+        normalize: (value) => String(value ?? '')
+            .toLowerCase()
+            .normalize('NFD')
+            .replace(/\p{Diacritic}/gu, '')
+            .trim(),
+
+        debounce(fn, delay = 150) {
+            let timeoutId;
+            return (...args) => {
+                clearTimeout(timeoutId);
+                timeoutId = setTimeout(() => fn(...args), delay);
+            };
+        },
+
+        parseSerial(serial) {
+            const s = String(serial ?? '').trim();
+            if (!s || s === '-') return null;
+            const n = parseInt(s, 10);
+            return Number.isFinite(n) ? n : null;
+        },
+
+        // Crear índice de búsqueda para una cámara
+        buildSearchIndex(cam) {
+            const { status, speeds, film } = CONFIG;
+            const statusCfg = status[cam.status] ?? {};
+            const speedsCfg = speeds[cam.speeds ?? CONFIG.defaults.speeds] ?? {};
+            const filmCfg = film[cam.film ?? CONFIG.defaults.film] ?? {};
+
+            return Utils.normalize([
+                cam.brand, cam.model, cam.serial, cam.notes,
+                cam.status, statusCfg.label,
+                cam.speeds, speedsCfg.label,
+                cam.film, filmCfg.label
+            ].join(' '));
+        }
+    };
+
+    // Pre-calcular índices de búsqueda
+    const searchIndexes = new Map(CAMERAS.map(cam => [cam, Utils.buildSearchIndex(cam)]));
+
+    // ============================================
+    // DOM
+    // ============================================
+    const $ = (selector) => document.querySelector(selector);
+    const $$ = (selector) => document.querySelectorAll(selector);
+
+    const DOM = {
+        tableBody: $('#tableBody'),
+        searchInput: $('#searchInput'),
+        brandFilter: $('#brandFilter'),
+        statusFilter: $('#statusFilter'),
+        speedsFilter: $('#speedsFilter'),
+        filmFilter: $('#filmFilter'),
+        resetBtn: $('#resetBtn'),
+        countDisplay: $('#countDisplay'),
+        headers: $$('th[data-col]')
+    };
+
+    // ============================================
+    // ESTADO
+    // ============================================
+    const state = {
+        sort: { column: 'brand', direction: 'asc' }
+    };
+
+    // ============================================
+    // LÓGICA DE NEGOCIO
+    // ============================================
+    const getFilters = () => ({
+        search: Utils.normalize(DOM.searchInput.value),
+        brand: DOM.brandFilter.value,
+        status: DOM.statusFilter.value,
+        speeds: DOM.speedsFilter.value,
+        film: DOM.filmFilter.value
+    });
+
+    const filterCameras = (cameras, filters) => {
+        const { search, brand, status, speeds, film } = filters;
+
+        return cameras.filter(cam => {
+            if (search && !searchIndexes.get(cam).includes(search)) return false;
+            if (brand !== 'all' && cam.brand !== brand) return false;
+            if (status !== 'all' && cam.status !== status) return false;
+            if (speeds !== 'all' && (cam.speeds ?? CONFIG.defaults.speeds) !== speeds) return false;
+            if (film !== 'all' && (cam.film ?? CONFIG.defaults.film) !== film) return false;
+            return true;
+        });
+    };
+
+    const sortCameras = (cameras, { column, direction }) => {
+        const dir = direction === 'asc' ? 1 : -1;
+
+        const comparators = {
+            serial: (a, b) => {
+                const numA = Utils.parseSerial(a.serial);
+                const numB = Utils.parseSerial(b.serial);
+                if (numA === null && numB === null) return 0;
+                if (numA === null) return 1;
+                if (numB === null) return -1;
+                return numA - numB;
+            },
+            status: (a, b) => Utils.compareText(
+                CONFIG.status[a.status]?.label ?? '',
+                CONFIG.status[b.status]?.label ?? ''
+            ),
+            speeds: (a, b) => Utils.compareText(
+                CONFIG.speeds[a.speeds ?? CONFIG.defaults.speeds]?.label ?? '',
+                CONFIG.speeds[b.speeds ?? CONFIG.defaults.speeds]?.label ?? ''
+            ),
+            film: (a, b) => Utils.compareText(
+                CONFIG.film[a.film ?? CONFIG.defaults.film]?.label ?? '',
+                CONFIG.film[b.film ?? CONFIG.defaults.film]?.label ?? ''
+            ),
+            default: (a, b) => Utils.compareText(a[column] ?? '', b[column] ?? '')
+        };
+
+        const compare = comparators[column] ?? comparators.default;
+
+        return [...cameras].sort((a, b) => {
+            const cmp = compare(a, b);
+            if (cmp !== 0) return cmp * dir;
+            // Desempate estable
+            return Utils.compareText(
+                `${a.brand} ${a.model} ${a.serial}`,
+                `${b.brand} ${b.model} ${b.serial}`
+            );
+        });
+    };
+
+    // ============================================
+    // RENDERIZADO (sin innerHTML para datos)
+    // ============================================
+    const createBadge = (text, cssClass) => {
+        const span = document.createElement('span');
+        span.className = `badge ${cssClass}`;
+        span.textContent = text;
+        return span;
+    };
+
+    const createCell = (text, className) => {
+        const td = document.createElement('td');
+        if (className) td.className = className;
+        td.textContent = text;
+        return td;
+    };
+
+    const createRow = (cam) => {
+        const tr = document.createElement('tr');
+        const st = CONFIG.status[cam.status];
+        const sp = CONFIG.speeds[cam.speeds ?? CONFIG.defaults.speeds];
+        const fm = CONFIG.film[cam.film ?? CONFIG.defaults.film];
+
+        tr.appendChild(createCell(cam.brand, 'col-brand'));
+        tr.appendChild(createCell(cam.model, 'col-model'));
+        tr.appendChild(createCell(cam.serial, 'col-serial'));
+
+        const statusCell = document.createElement('td');
+        statusCell.className = 'col-status';
+        statusCell.appendChild(createBadge(st.label, st.cssClass));
+        tr.appendChild(statusCell);
+
+        const speedsCell = document.createElement('td');
+        speedsCell.className = 'col-speeds';
+        speedsCell.appendChild(createBadge(sp.label, sp.cssClass));
+        tr.appendChild(speedsCell);
+
+        const filmCell = document.createElement('td');
+        filmCell.className = 'col-film';
+        filmCell.appendChild(createBadge(fm.label, fm.cssClass));
+        tr.appendChild(filmCell);
+
+        tr.appendChild(createCell(cam.notes, 'col-notes'));
+
+        return tr;
+    };
+
+    const renderTable = (cameras) => {
+        const tbody = DOM.tableBody;
+        tbody.innerHTML = ''; // Limpiar
+
+        if (cameras.length === 0) {
+            const tr = document.createElement('tr');
+            const td = document.createElement('td');
+            td.colSpan = 7;
+            td.className = 'empty-state';
+            td.textContent = 'No se encontraron cámaras con los filtros seleccionados';
+            tr.appendChild(td);
+            tbody.appendChild(tr);
+        } else {
+            const fragment = document.createDocumentFragment();
+            cameras.forEach(cam => fragment.appendChild(createRow(cam)));
+            tbody.appendChild(fragment);
+        }
+
+        DOM.countDisplay.textContent = cameras.length;
+    };
+
+    const updateHeaderIcons = () => {
+        DOM.headers.forEach(th => {
+            const col = th.dataset.col;
+            const isActive = col === state.sort.column;
+            const icon = th.querySelector('.sort-icon');
+
+            th.classList.toggle('active', isActive);
+            th.setAttribute('aria-sort', 
+                isActive ? (state.sort.direction === 'asc' ? 'ascending' : 'descending') : 'none'
+            );
+            icon.textContent = isActive 
+                ? (state.sort.direction === 'asc' ? '↑' : '↓') 
+                : '⇅';
+        });
+    };
+
+    const render = () => {
+        const filters = getFilters();
+        const filtered = filterCameras(CAMERAS, filters);
+        const sorted = sortCameras(filtered, state.sort);
+        renderTable(sorted);
+        updateHeaderIcons();
+    };
+
+    const scheduleRender = Utils.debounce(render, 150);
+
+    // ============================================
+    // PERSISTENCIA
+    // ============================================
+    const Storage = {
+        save() {
+            const payload = {
+                sort: state.sort,
+                filters: {
+                    search: DOM.searchInput.value,
+                    brand: DOM.brandFilter.value,
+                    status: DOM.statusFilter.value,
+                    speeds: DOM.speedsFilter.value,
+                    film: DOM.filmFilter.value
+                }
+            };
+            try {
+                localStorage.setItem(CONFIG.storageKey, JSON.stringify(payload));
+            } catch { /* Silenciar errores de quota */ }
+        },
+
+        load() {
+            try {
+                const raw = localStorage.getItem(CONFIG.storageKey);
+                if (!raw) return;
+                
+                const data = JSON.parse(raw);
+                if (data?.sort?.column) state.sort = data.sort;
+
+                if (data?.filters) {
+                    const f = data.filters;
+                    DOM.searchInput.value = f.search ?? '';
+                    DOM.brandFilter.value = f.brand ?? 'all';
+                    DOM.statusFilter.value = f.status ?? 'all';
+                    DOM.speedsFilter.value = f.speeds ?? 'all';
+                    DOM.filmFilter.value = f.film ?? 'all';
+                }
+            } catch { /* Datos corruptos, ignorar */ }
+        }
+    };
+
+    // ============================================
+    // INICIALIZACIÓN
+    // ============================================
+    const populateBrandFilter = () => {
+        const brands = [...new Set(CAMERAS.map(c => c.brand))].sort(Utils.compareText);
+        const fragment = document.createDocumentFragment();
+
+        const allOption = document.createElement('option');
+        allOption.value = 'all';
+        allOption.textContent = 'Todas las Marcas';
+        fragment.appendChild(allOption);
+
+        brands.forEach(brand => {
+            const opt = document.createElement('option');
+            opt.value = brand;
+            opt.textContent = brand;
+            fragment.appendChild(opt);
+        });
+
+        DOM.brandFilter.innerHTML = '';
+        DOM.brandFilter.appendChild(fragment);
+    };
+
+    const resetFilters = () => {
+        DOM.searchInput.value = '';
+        DOM.brandFilter.value = 'all';
+        DOM.statusFilter.value = 'all';
+        DOM.speedsFilter.value = 'all';
+        DOM.filmFilter.value = 'all';
+        state.sort = { column: 'brand', direction: 'asc' };
+        Storage.save();
+        render();
+        DOM.searchInput.focus();
+    };
+
+    const handleSort = (column) => {
+        if (state.sort.column === column) {
+            state.sort.direction = state.sort.direction === 'asc' ? 'desc' : 'asc';
+        } else {
+            state.sort.column = column;
+            state.sort.direction = 'asc';
+        }
+        Storage.save();
+        render();
+    };
+
+    const init = () => {
+        populateBrandFilter();
+        Storage.load();
+
+        // Event listeners con delegación donde sea posible
+        DOM.searchInput.addEventListener('input', () => { Storage.save(); scheduleRender(); });
+        
+        [DOM.brandFilter, DOM.statusFilter, DOM.speedsFilter, DOM.filmFilter].forEach(el => {
+            el.addEventListener('change', () => { Storage.save(); render(); });
+        });
+
+        DOM.resetBtn.addEventListener('click', resetFilters);
+
+        // Delegación para headers
+        const thead = document.querySelector('thead');
+        thead.addEventListener('click', (e) => {
+            const th = e.target.closest('th[data-col]');
+            if (th) handleSort(th.dataset.col);
+        });
+
+        thead.addEventListener('keydown', (e) => {
+            const th = e.target.closest('th[data-col]');
+            if (th && (e.key === 'Enter' || e.key === ' ')) {
+                e.preventDefault();
+                handleSort(th.dataset.col);
+            }
+        });
+
+        render();
+    };
+
+    // Iniciar
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+})();
+</script>
+</body>
+</html>
