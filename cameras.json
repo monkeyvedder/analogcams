@@ -1,0 +1,236 @@
+[
+  {
+    "brand": "Canon",
+    "model": "Canon A-1",
+    "serial": "1851141",
+    "status": "ok",
+    "speeds": "ok",
+    "film": "no",
+    "notes": "Velocidades rápidas: OK."
+  },
+  {
+    "brand": "Canon",
+    "model": "Canon AE-1",
+    "serial": "4402114",
+    "status": "warning",
+    "speeds": "bad",
+    "film": "yes",
+    "notes": "Velocidades altas: fallan."
+  },
+  {
+    "brand": "Canon",
+    "model": "Canon AE-1 Program",
+    "serial": "4634971",
+    "status": "ok",
+    "speeds": "ok",
+    "film": "no",
+    "notes": "Revisada por Sol Lab."
+  },
+  {
+    "brand": "Canon",
+    "model": "Canon AE-1 Program",
+    "serial": "3613384",
+    "status": "warning",
+    "speeds": "bad",
+    "film": "no",
+    "notes": "Velocidades altas: fallan."
+  },
+  {
+    "brand": "Canon",
+    "model": "Canon AE-1 Program",
+    "serial": "4645365",
+    "status": "warning",
+    "speeds": "ok",
+    "film": "no",
+    "notes": "Velocidades: correctas."
+  },
+  {
+    "brand": "Canon",
+    "model": "Canon EOS 300",
+    "serial": "3140613",
+    "status": "ok",
+    "speeds": "ok",
+    "film": "yes",
+    "notes": "Funciona OK."
+  },
+  {
+    "brand": "Canon",
+    "model": "Canon EOS 300v",
+    "serial": "72045395",
+    "status": "ok",
+    "speeds": "ok",
+    "film": "yes",
+    "notes": "Funciona OK."
+  },
+  {
+    "brand": "Minolta",
+    "model": "Minolta X700",
+    "serial": "-",
+    "status": "warning",
+    "speeds": "ok",
+    "film": "no",
+    "notes": "Bloqueador modo A-P: falla. Velocidades: OK."
+  },
+  {
+    "brand": "Minolta",
+    "model": "Minolta X700",
+    "serial": "-",
+    "status": "ok",
+    "speeds": "ok",
+    "film": "yes",
+    "notes": "Funciona OK."
+  },
+  {
+    "brand": "Minolta",
+    "model": "Minolta XD 50th",
+    "serial": "-",
+    "status": "warning",
+    "speeds": "ok",
+    "film": "no",
+    "notes": "Velocidades: correctas."
+  },
+  {
+    "brand": "Minolta",
+    "model": "Minolta Explorer",
+    "serial": "40805410",
+    "status": "warning",
+    "speeds": "unknown",
+    "film": "no",
+    "notes": "En teoría funciona bien."
+  },
+  {
+    "brand": "Olympus",
+    "model": "Olympus AF1",
+    "serial": "-",
+    "status": "ok",
+    "speeds": "ok",
+    "film": "yes",
+    "notes": "En pruebas. Carrete Ilford FP4 Plus 36"
+  },
+  {
+    "brand": "Olympus",
+    "model": "Olympus EE-2",
+    "serial": "4474773",
+    "status": "pending",
+    "speeds": "unknown",
+    "film": "yes",
+    "notes": "En teoría funciona bien."
+  },
+  {
+    "brand": "Olympus",
+    "model": "Olympus OM-10",
+    "serial": "905715",
+    "status": "ok",
+    "speeds": "bad",
+    "film": "yes",
+    "notes": "Funciona, pero falla en velocidades altas."
+  },
+  {
+    "brand": "Olympus",
+    "model": "Olympus OM-2",
+    "serial": "550463",
+    "status": "ok",
+    "speeds": "ok",
+    "film": "yes",
+    "notes": "Velocidades: correctas. (Ex dueño: un chaval)."
+  },
+  {
+    "brand": "Olympus",
+    "model": "Olympus OM-2 (Val)",
+    "serial": "280275",
+    "status": "error",
+    "speeds": "bad",
+    "film": "no",
+    "notes": "Velocidades altas: fallan."
+  },
+  {
+    "brand": "Olympus",
+    "model": "Olympus OM-2 Spot",
+    "serial": "1086785",
+    "status": "error",
+    "speeds": "bad",
+    "film": "no",
+    "notes": "Velocidades altas: fallan."
+  },
+  {
+    "brand": "Olympus",
+    "model": "Olympus OM-2n (Cad)",
+    "serial": "921526",
+    "status": "error",
+    "speeds": "bad",
+    "film": "no",
+    "notes": "Velocidades altas: fallan."
+  },
+  {
+    "brand": "Olympus",
+    "model": "Olympus OM-2n (Ita)",
+    "serial": "973164",
+    "status": "ok",
+    "speeds": "ok",
+    "film": "no",
+    "notes": "Revisada por Sol Lab."
+  },
+  {
+    "brand": "Olympus",
+    "model": "Olympus OM-2n (Ast)",
+    "serial": "693044",
+    "status": "error",
+    "speeds": "bad",
+    "film": "no",
+    "notes": "Espejo: manchado. Velocidades altas: fallan."
+  },
+  {
+    "brand": "Olympus",
+    "model": "Olympus OM-20",
+    "serial": "1177265",
+    "status": "warning",
+    "speeds": "bad",
+    "film": "no",
+    "notes": "Velocidades altas: fallan."
+  },
+  {
+    "brand": "Olympus",
+    "model": "Olympus OM-30",
+    "serial": "1105702",
+    "status": "ok",
+    "speeds": "ok",
+    "film": "yes",
+    "notes": "Funciona OK."
+  },
+  {
+    "brand": "Olympus",
+    "model": "Olympus OM-40 (Vic)",
+    "serial": "1259937",
+    "status": "warning",
+    "speeds": "ok",
+    "film": "yes",
+    "notes": "Modo P: no funciona. Modo A: OK. Velocidades: OK."
+  },
+  {
+    "brand": "Pentax",
+    "model": "Pentax Espio 115V",
+    "serial": "4237198",
+    "status": "ok",
+    "speeds": "ok",
+    "film": "yes",
+    "notes": "En pruebas. Carrete Kodak Gold 200 36"
+  },
+  {
+    "brand": "Pentax",
+    "model": "Pentax Program A",
+    "serial": "1495925",
+    "status": "warning",
+    "speeds": "ok",
+    "film": "no",
+    "notes": "Velocidades: correctas."
+  },
+  {
+    "brand": "Pentax",
+    "model": "Pentax 17",
+    "serial": "9007488",
+    "status": "ok",
+    "speeds": "ok",
+    "film": "yes",
+    "notes": "En pruebas. Carrete Fujifilm 200 36"
+  }
+]
