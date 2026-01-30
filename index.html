@@ -26,14 +26,14 @@
             --bg-surface: #f0f1f2;
             --bg-hover: #dcdee0;
             --border: #c5c7ca;
-            --text-main: #2c2d2e;
-            --text-muted: #5a5c5e;
+            --text-main: #1a1b1c;
+            --text-muted: #4a4c4e;
             --accent: #0d6efd;
             
-            --ok-bg: rgba(16, 185, 129, 0.15); --ok-tx: #0a6640;
-            --warn-bg: rgba(245, 158, 11, 0.15); --warn-tx: #a04700;
-            --err-bg: rgba(220, 38, 38, 0.15); --err-tx: #a31515;
-            --pend-bg: rgba(139, 92, 246, 0.15); --pend-tx: #5a1fa1;
+            --ok-bg: rgba(16, 185, 129, 0.18); --ok-tx: #085d38;
+            --warn-bg: rgba(245, 158, 11, 0.18); --warn-tx: #8b3a00;
+            --err-bg: rgba(220, 38, 38, 0.18); --err-tx: #8b1010;
+            --pend-bg: rgba(139, 92, 246, 0.18); --pend-tx: #4a1585;
         }
 
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -245,6 +245,9 @@
             min-width: 300px;
             max-width: 400px;
         }
+        [data-theme="light"] .col-notes { color: #4a4a4a; }
+        [data-theme="light"] .col-serial { color: #5a5c5e; }
+        [data-theme="light"] td { color: #2c2d2e; }
 
         .badge {
             display: inline-flex;
@@ -890,14 +893,23 @@
     };
 
     const renderGroupedTable = (cameras) => {
-        const container = DOM.tableContainer;
-        container.innerHTML = '';
+        // Buscar o crear contenedor para vista agrupada
+        let groupedContainer = document.getElementById('groupedTableContainer');
+        if (!groupedContainer) {
+            groupedContainer = document.createElement('div');
+            groupedContainer.id = 'groupedTableContainer';
+            groupedContainer.className = 'table-wrapper';
+            DOM.tableContainer.parentNode.appendChild(groupedContainer);
+        }
+        
+        groupedContainer.innerHTML = '';
 
         if (cameras.length === 0) {
             const empty = document.createElement('div');
             empty.className = 'empty-state';
             empty.textContent = 'No se encontraron cámaras con los filtros seleccionados';
-            container.appendChild(empty);
+            groupedContainer.appendChild(empty);
+            DOM.countDisplay.textContent = 0;
             return;
         }
 
@@ -983,7 +995,7 @@
             fragment.appendChild(group);
         });
 
-        container.appendChild(fragment);
+        groupedContainer.appendChild(fragment);
         DOM.countDisplay.textContent = cameras.length;
     };
 
@@ -1010,11 +1022,22 @@
         
         renderStats(CAMERAS); // Siempre mostrar stats de todas las cámaras
         
+        const groupedContainer = document.getElementById('groupedTableContainer');
+        
         if (state.groupByBrand && state.view === 'table') {
+            // Mostrar vista agrupada
+            DOM.tableContainer.style.display = 'none';
+            if (groupedContainer) groupedContainer.style.display = '';
             renderGroupedTable(sorted);
         } else if (state.view === 'table') {
+            // Restaurar vista de tabla normal
+            if (groupedContainer) groupedContainer.style.display = 'none';
+            DOM.tableContainer.style.display = '';
             renderTable(sorted);
         } else {
+            // Vista de tarjetas
+            if (groupedContainer) groupedContainer.style.display = 'none';
+            DOM.tableContainer.style.display = 'none';
             renderCards(sorted);
         }
         
