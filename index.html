@@ -479,6 +479,7 @@
                         <th data-col="status" tabindex="0" role="columnheader">Estado <span class="sort-icon" aria-hidden="true">⇅</span></th>
                         <th data-col="speeds" tabindex="0" role="columnheader">Velocidades <span class="sort-icon" aria-hidden="true">⇅</span></th>
                         <th data-col="film" tabindex="0" role="columnheader">Carrete <span class="sort-icon" aria-hidden="true">⇅</span></th>
+                        <th data-col="loaded" tabindex="0" role="columnheader">Con Carrete <span class="sort-icon" aria-hidden="true">⇅</span></th>
                         <th data-col="notes" tabindex="0" role="columnheader">Observaciones <span class="sort-icon" aria-hidden="true">⇅</span></th>
                     </tr>
                 </thead>
@@ -518,7 +519,11 @@
             yes: { label: 'Probado',    cssClass: 'st-ok' },
             no:  { label: 'No probado', cssClass: 'st-pend' }
         },
-        defaults: { speeds: 'unknown', film: 'no' },
+        loaded: {
+            yes: { label: 'Sí', cssClass: 'st-warn' },
+            no:  { label: 'No', cssClass: 'st-pend' }
+        },
+        defaults: { speeds: 'unknown', film: 'no', loaded: 'no' },
         storageKey: 'cameraCollection.v2'
     });
 
@@ -553,16 +558,18 @@
 
         // Crear índice de búsqueda para una cámara
         buildSearchIndex(cam) {
-            const { status, speeds, film } = CONFIG;
+            const { status, speeds, film, loaded } = CONFIG;
             const statusCfg = status[cam.status] ?? {};
             const speedsCfg = speeds[cam.speeds ?? CONFIG.defaults.speeds] ?? {};
             const filmCfg = film[cam.film ?? CONFIG.defaults.film] ?? {};
+            const loadedCfg = loaded[cam.loaded ?? CONFIG.defaults.loaded] ?? {};
 
             return Utils.normalize([
                 cam.brand, cam.model, cam.serial, cam.notes,
                 cam.status, statusCfg.label,
                 cam.speeds, speedsCfg.label,
-                cam.film, filmCfg.label
+                cam.film, filmCfg.label,
+                cam.loaded, loadedCfg.label
             ].join(' '));
         }
     };
@@ -655,6 +662,10 @@
                 CONFIG.film[a.film ?? CONFIG.defaults.film]?.label ?? '',
                 CONFIG.film[b.film ?? CONFIG.defaults.film]?.label ?? ''
             ),
+            loaded: (a, b) => Utils.compareText(
+                CONFIG.loaded[a.loaded ?? CONFIG.defaults.loaded]?.label ?? '',
+                CONFIG.loaded[b.loaded ?? CONFIG.defaults.loaded]?.label ?? ''
+            ),
             default: (a, b) => Utils.compareText(a[column] ?? '', b[column] ?? '')
         };
 
@@ -693,10 +704,11 @@
         const st = CONFIG.status[cam.status];
         const sp = CONFIG.speeds[cam.speeds ?? CONFIG.defaults.speeds];
         const fm = CONFIG.film[cam.film ?? CONFIG.defaults.film];
+        const ld = CONFIG.loaded[cam.loaded ?? CONFIG.defaults.loaded];
 
         // Agregar clases para resaltado
         if (cam.status === 'error') tr.classList.add('urgent');
-        if (cam.film === 'yes') tr.classList.add('has-film');
+        if (cam.loaded === 'yes') tr.classList.add('has-film');
 
         tr.appendChild(createCell(cam.brand, 'col-brand'));
         tr.appendChild(createCell(cam.model, 'col-model'));
@@ -717,6 +729,11 @@
         filmCell.appendChild(createBadge(fm.label, fm.cssClass));
         tr.appendChild(filmCell);
 
+        const loadedCell = document.createElement('td');
+        loadedCell.className = 'col-loaded';
+        loadedCell.appendChild(createBadge(ld.label, ld.cssClass));
+        tr.appendChild(loadedCell);
+
         tr.appendChild(createCell(cam.notes, 'col-notes'));
 
         return tr;
@@ -727,11 +744,12 @@
         card.className = 'camera-card';
         
         if (cam.status === 'error') card.classList.add('urgent');
-        if (cam.film === 'yes') card.classList.add('has-film');
+        if (cam.loaded === 'yes') card.classList.add('has-film');
 
         const st = CONFIG.status[cam.status];
         const sp = CONFIG.speeds[cam.speeds ?? CONFIG.defaults.speeds];
         const fm = CONFIG.film[cam.film ?? CONFIG.defaults.film];
+        const ld = CONFIG.loaded[cam.loaded ?? CONFIG.defaults.loaded];
 
         // Header
         const header = document.createElement('div');
@@ -770,6 +788,7 @@
         info.appendChild(createInfoRow('Estado:', createBadge(st.label, st.cssClass)));
         info.appendChild(createInfoRow('Velocidades:', createBadge(sp.label, sp.cssClass)));
         info.appendChild(createInfoRow('Carrete:', createBadge(fm.label, fm.cssClass)));
+        info.appendChild(createInfoRow('Con Carrete:', createBadge(ld.label, ld.cssClass)));
 
         // Notes
         const notes = document.createElement('div');
@@ -790,7 +809,7 @@
             warning: cameras.filter(c => c.status === 'warning').length,
             error: cameras.filter(c => c.status === 'error').length,
             pending: cameras.filter(c => c.status === 'pending').length,
-            withFilm: cameras.filter(c => c.film === 'yes').length
+            withFilm: cameras.filter(c => c.loaded === 'yes').length
         };
 
         const dashboard = DOM.statsDashboard;
@@ -818,7 +837,7 @@
         dashboard.appendChild(createStatCard(stats.ok, 'Funcionales', 'var(--ok-tx)'));
         dashboard.appendChild(createStatCard(stats.warning, 'Con detalles', 'var(--warn-tx)'));
         dashboard.appendChild(createStatCard(stats.error, 'A reparar', 'var(--err-tx)'));
-        dashboard.appendChild(createStatCard(stats.withFilm, 'Con carrete', 'var(--warn-tx)'));
+        dashboard.appendChild(createStatCard(stats.withFilm, 'Cargadas', 'var(--warn-tx)'));
     };
 
     const renderTable = (cameras) => {
@@ -828,7 +847,7 @@
         if (cameras.length === 0) {
             const tr = document.createElement('tr');
             const td = document.createElement('td');
-            td.colSpan = 7;
+            td.colSpan = 8;
             td.className = 'empty-state';
             td.textContent = 'No se encontraron cámaras con los filtros seleccionados';
             tr.appendChild(td);
@@ -906,6 +925,7 @@
                         <th>Estado</th>
                         <th>Velocidades</th>
                         <th>Carrete</th>
+                        <th>Con Carrete</th>
                         <th>Observaciones</th>
                     </tr>
                 </thead>
@@ -915,11 +935,12 @@
             brandCameras.forEach(cam => {
                 const tr = document.createElement('tr');
                 if (cam.status === 'error') tr.classList.add('urgent');
-                if (cam.film === 'yes') tr.classList.add('has-film');
+                if (cam.loaded === 'yes') tr.classList.add('has-film');
                 
                 const st = CONFIG.status[cam.status];
                 const sp = CONFIG.speeds[cam.speeds ?? CONFIG.defaults.speeds];
                 const fm = CONFIG.film[cam.film ?? CONFIG.defaults.film];
+                const ld = CONFIG.loaded[cam.loaded ?? CONFIG.defaults.loaded];
                 
                 tr.appendChild(createCell(cam.model, 'col-model'));
                 tr.appendChild(createCell(cam.serial, 'col-serial'));
@@ -935,6 +956,10 @@
                 const filmCell = document.createElement('td');
                 filmCell.appendChild(createBadge(fm.label, fm.cssClass));
                 tr.appendChild(filmCell);
+                
+                const loadedCell = document.createElement('td');
+                loadedCell.appendChild(createBadge(ld.label, ld.cssClass));
+                tr.appendChild(loadedCell);
                 
                 tr.appendChild(createCell(cam.notes, 'col-notes'));
                 
@@ -1050,7 +1075,7 @@
         } catch (error) {
             console.error('Error cargando cámaras:', error);
             DOM.tableBody.innerHTML = `
-                <tr><td colspan="7" class="empty-state">
+                <tr><td colspan="8" class="empty-state">
                     ❌ Error al cargar los datos. Por favor, recarga la página.
                 </td></tr>
             `;
@@ -1120,11 +1145,12 @@
         const filtered = filterCameras(CAMERAS, filters);
         const sorted = sortCameras(filtered, state.sort);
 
-        const headers = ['Marca', 'Modelo', 'Nº Serie', 'Estado', 'Velocidades', 'Carrete', 'Observaciones'];
+        const headers = ['Marca', 'Modelo', 'Nº Serie', 'Estado', 'Velocidades', 'Carrete', 'Con Carrete', 'Observaciones'];
         const rows = sorted.map(cam => {
             const st = CONFIG.status[cam.status]?.label ?? '';
             const sp = CONFIG.speeds[cam.speeds ?? CONFIG.defaults.speeds]?.label ?? '';
             const fm = CONFIG.film[cam.film ?? CONFIG.defaults.film]?.label ?? '';
+            const ld = CONFIG.loaded[cam.loaded ?? CONFIG.defaults.loaded]?.label ?? '';
             
             return [
                 cam.brand,
@@ -1133,6 +1159,7 @@
                 st,
                 sp,
                 fm,
+                ld,
                 cam.notes
             ].map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(',');
         });
@@ -1164,7 +1191,7 @@
     const init = async () => {
         // Mostrar estado de carga
         DOM.tableBody.innerHTML = `
-            <tr><td colspan="7" class="empty-state">
+            <tr><td colspan="8" class="empty-state">
                 Cargando datos...
             </td></tr>
         `;

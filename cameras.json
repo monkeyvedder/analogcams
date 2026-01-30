@@ -6,6 +6,7 @@
     "status": "ok",
     "speeds": "ok",
     "film": "no",
+    "loaded": "no",
     "notes": "Velocidades rápidas: OK."
   },
   {
@@ -15,6 +16,7 @@
     "status": "error",
     "speeds": "bad",
     "film": "yes",
+    "loaded": "no",
     "notes": "Velocidades altas: fallan. Mandar a reparar a Sol Lab."
   },
   {
@@ -24,6 +26,7 @@
     "status": "ok",
     "speeds": "ok",
     "film": "no",
+    "loaded": "no",
     "notes": "Revisada por Sol Lab."
   },
   {
@@ -33,6 +36,7 @@
     "status": "error",
     "speeds": "bad",
     "film": "no",
+    "loaded": "no",
     "notes": "Velocidades altas: fallan. Mandar a reparar a Sol Lab."
   },
   {
@@ -42,6 +46,7 @@
     "status": "warning",
     "speeds": "ok",
     "film": "no",
+    "loaded": "no",
     "notes": "Velocidades: correctas."
   },
   {
@@ -51,6 +56,7 @@
     "status": "ok",
     "speeds": "ok",
     "film": "yes",
+    "loaded": "no",
     "notes": "Funciona OK."
   },
   {
@@ -60,6 +66,7 @@
     "status": "ok",
     "speeds": "ok",
     "film": "yes",
+    "loaded": "no",
     "notes": "Funciona OK."
   },
   {
@@ -69,6 +76,7 @@
     "status": "warning",
     "speeds": "ok",
     "film": "no",
+    "loaded": "no",
     "notes": "Bloqueador modo A-P: falla. Velocidades: OK."
   },
   {
@@ -78,6 +86,7 @@
     "status": "ok",
     "speeds": "ok",
     "film": "yes",
+    "loaded": "no",
     "notes": "Funciona OK."
   },
   {
@@ -87,6 +96,7 @@
     "status": "warning",
     "speeds": "ok",
     "film": "no",
+    "loaded": "no",
     "notes": "Velocidades: correctas."
   },
   {
@@ -96,6 +106,7 @@
     "status": "warning",
     "speeds": "unknown",
     "film": "no",
+    "loaded": "no",
     "notes": "En teoría funciona bien."
   },
   {
@@ -105,6 +116,7 @@
     "status": "ok",
     "speeds": "ok",
     "film": "yes",
+    "loaded": "yes",
     "notes": "En pruebas. Carrete Ilford FP4 Plus 36"
   },
   {
@@ -114,6 +126,7 @@
     "status": "pending",
     "speeds": "unknown",
     "film": "yes",
+    "loaded": "no",
     "notes": "En teoría funciona bien."
   },
   {
@@ -123,6 +136,7 @@
     "status": "ok",
     "speeds": "bad",
     "film": "yes",
+    "loaded": "no",
     "notes": "Funciona, pero falla en velocidades altas."
   },
   {
@@ -132,6 +146,7 @@
     "status": "ok",
     "speeds": "ok",
     "film": "yes",
+    "loaded": "no",
     "notes": "Velocidades: correctas. (Ex dueño: un chaval)."
   },
   {
@@ -141,6 +156,7 @@
     "status": "error",
     "speeds": "bad",
     "film": "no",
+    "loaded": "no",
     "notes": "Velocidades altas: fallan. Mandar a reparar a Sol Lab."
   },
   {
@@ -150,6 +166,7 @@
     "status": "error",
     "speeds": "bad",
     "film": "no",
+    "loaded": "no",
     "notes": "Velocidades altas: fallan. Mandar a reparar a Sol Lab."
   },
   {
@@ -159,6 +176,7 @@
     "status": "error",
     "speeds": "bad",
     "film": "no",
+    "loaded": "no",
     "notes": "Velocidades altas: fallan. Mandar a reparar a Sol Lab."
   },
   {
@@ -168,6 +186,7 @@
     "status": "ok",
     "speeds": "ok",
     "film": "no",
+    "loaded": "no",
     "notes": "Revisada por Sol Lab."
   },
   {
@@ -177,6 +196,7 @@
     "status": "error",
     "speeds": "bad",
     "film": "no",
+    "loaded": "no",
     "notes": "Espejo: manchado. Velocidades altas: fallan. Mandar a reparar a Sol Lab."
   },
   {
@@ -186,6 +206,7 @@
     "status": "error",
     "speeds": "bad",
     "film": "no",
+    "loaded": "no",
     "notes": "Velocidades altas: fallan. Mandar a reparar a Sol Lab."
   },
   {
@@ -195,6 +216,7 @@
     "status": "ok",
     "speeds": "ok",
     "film": "yes",
+    "loaded": "no",
     "notes": "Funciona OK."
   },
   {
@@ -204,6 +226,7 @@
     "status": "warning",
     "speeds": "ok",
     "film": "yes",
+    "loaded": "no",
     "notes": "Modo P: no funciona. Modo A: OK. Velocidades: OK."
   },
   {
@@ -213,6 +236,7 @@
     "status": "ok",
     "speeds": "ok",
     "film": "yes",
+    "loaded": "yes",
     "notes": "En pruebas. Carrete Kodak Gold 200 36"
   },
   {
@@ -222,6 +246,7 @@
     "status": "warning",
     "speeds": "ok",
     "film": "no",
+    "loaded": "no",
     "notes": "Velocidades: correctas."
   },
   {
@@ -231,6 +256,7 @@
     "status": "ok",
     "speeds": "ok",
     "film": "yes",
+    "loaded": "yes",
     "notes": "En pruebas. Carrete Fujifilm 200 36"
   }
 ]
