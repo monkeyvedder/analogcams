@@ -21,6 +21,21 @@
             --pend-bg: rgba(139, 92, 246, 0.15); --pend-tx: #c4b5fd;
         }
 
+        [data-theme="light"] {
+            --bg-body: #f5f5f5;
+            --bg-surface: #ffffff;
+            --bg-hover: #f0f0f0;
+            --border: #e0e0e0;
+            --text-main: #1a1a1a;
+            --text-muted: #666;
+            --accent: #2563eb;
+            
+            --ok-bg: rgba(16, 185, 129, 0.2); --ok-tx: #059669;
+            --warn-bg: rgba(245, 158, 11, 0.2); --warn-tx: #d97706;
+            --err-bg: rgba(239, 68, 68, 0.2); --err-tx: #dc2626;
+            --pend-bg: rgba(139, 92, 246, 0.2); --pend-tx: #7c3aed;
+        }
+
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
@@ -33,6 +48,41 @@
         }
 
         .container { max-width: 1400px; margin: 0 auto; }
+
+        /* Dashboard Stats */
+        .stats-dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 16px;
+            text-align: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
 
         /* Header y Filtros */
         .header-controls {
@@ -75,6 +125,41 @@
 
         .btn { cursor: pointer; }
         .btn:hover { background: var(--bg-hover); }
+
+        .btn-group {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .icon-btn {
+            padding: 8px;
+            min-width: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+        }
+
+        .view-toggle {
+            display: flex;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .view-toggle button {
+            border-radius: 0;
+            border-right: 1px solid var(--border);
+        }
+
+        .view-toggle button:last-child {
+            border-right: none;
+        }
+
+        .view-toggle button.active {
+            background: var(--accent);
+            color: white;
+        }
 
         /* Tabla */
         .table-wrapper {
@@ -126,6 +211,14 @@
 
         tbody tr:last-child td { border-bottom: none; }
         tbody tr:hover { background-color: var(--bg-hover); }
+        
+        tbody tr.urgent {
+            border-left: 3px solid var(--err-tx);
+        }
+        
+        tbody tr.has-film {
+            border-left: 3px solid var(--warn-tx);
+        }
 
         .col-brand { font-weight: 600; color: #fff; }
         .col-model { font-weight: 500; }
@@ -163,6 +256,137 @@
             color: var(--text-muted);
         }
 
+        /* Vista Cards */
+        .cards-view {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 16px;
+            padding: 20px;
+        }
+
+        .camera-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 16px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .camera-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        .camera-card.urgent {
+            border-left: 4px solid var(--err-tx);
+        }
+
+        .camera-card.has-film {
+            border-left: 4px solid var(--warn-tx);
+        }
+
+        .card-header {
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .card-brand {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .card-model {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 4px;
+        }
+
+        .card-serial {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .card-info {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .card-info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+        }
+
+        .card-notes {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px solid var(--border);
+        }
+
+        .view-table { display: block; }
+        .view-cards { display: none; }
+        body.cards-mode .view-table { display: none; }
+        body.cards-mode .view-cards { display: block; }
+
+        /* Grupos por marca */
+        .brand-group {
+            margin-bottom: 24px;
+        }
+
+        .brand-group-header {
+            background: var(--bg-surface);
+            padding: 12px 16px;
+            border: 1px solid var(--border);
+            border-radius: 8px 8px 0 0;
+            font-weight: 600;
+            font-size: 1.1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            user-select: none;
+            transition: background 0.2s;
+        }
+
+        .brand-group-header:hover {
+            background: var(--bg-hover);
+        }
+
+        .brand-group-count {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        .brand-group-content {
+            border: 1px solid var(--border);
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+        }
+
+        .brand-group.collapsed .brand-group-content {
+            display: none;
+        }
+
+        .brand-group-content table {
+            border: none;
+        }
+
+        .brand-group-content thead {
+            background: #252525;
+        }
+
         /* Animación sutil al cargar filas */
         @media (prefers-reduced-motion: no-preference) {
             tbody tr {
@@ -179,12 +403,23 @@
             .header-controls { flex-direction: column; align-items: stretch; }
             h1 { margin-right: 0; margin-bottom: 10px; text-align: center; }
             .search-box { min-width: 100%; }
+            .btn-group { justify-content: center; }
+            .stats-dashboard { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media print {
+            .header-controls, .stats-dashboard { display: none; }
+            body { background: white; color: black; }
+            .table-wrapper { border: 1px solid #000; box-shadow: none; }
         }
     </style>
 </head>
 <body>
 
 <div class="container">
+    <!-- Dashboard de Estadísticas -->
+    <div class="stats-dashboard" id="statsDashboard"></div>
+
     <header class="header-controls">
         <h1>📷 Colección (<span id="countDisplay" role="status" aria-live="polite">0</span>)</h1>
         
@@ -215,24 +450,46 @@
             <option value="no">⏳ No probado</option>
         </select>
 
-        <button type="button" id="resetBtn" class="btn" aria-label="Resetear todos los filtros">Reset</button>
+        <div class="btn-group">
+            <button type="button" id="resetBtn" class="btn" aria-label="Resetear todos los filtros" title="Resetear filtros">🔄</button>
+            <button type="button" id="exportBtn" class="btn icon-btn" aria-label="Exportar a CSV" title="Exportar CSV">💾</button>
+            <button type="button" id="printBtn" class="btn icon-btn" aria-label="Imprimir" title="Imprimir">🖨️</button>
+            <button type="button" id="themeBtn" class="btn icon-btn" aria-label="Cambiar tema" title="Cambiar tema">🌙</button>
+        </div>
+
+        <div class="view-toggle">
+            <button type="button" id="tableViewBtn" class="btn active" aria-label="Vista tabla" title="Vista tabla">📋</button>
+            <button type="button" id="cardsViewBtn" class="btn" aria-label="Vista tarjetas" title="Vista tarjetas">🎴</button>
+        </div>
+
+        <label>
+            <input type="checkbox" id="groupByBrand"> Agrupar por marca
+        </label>
     </header>
 
-    <div class="table-wrapper">
-        <table role="grid" aria-label="Colección de cámaras analógicas">
-            <thead>
-                <tr>
-                    <th data-col="brand" tabindex="0" role="columnheader" aria-sort="ascending">Marca <span class="sort-icon" aria-hidden="true">⇅</span></th>
-                    <th data-col="model" tabindex="0" role="columnheader">Modelo <span class="sort-icon" aria-hidden="true">⇅</span></th>
-                    <th data-col="serial" tabindex="0" role="columnheader">Nº Serie <span class="sort-icon" aria-hidden="true">⇅</span></th>
-                    <th data-col="status" tabindex="0" role="columnheader">Estado <span class="sort-icon" aria-hidden="true">⇅</span></th>
-                    <th data-col="speeds" tabindex="0" role="columnheader">Velocidades <span class="sort-icon" aria-hidden="true">⇅</span></th>
-                    <th data-col="film" tabindex="0" role="columnheader">Carrete <span class="sort-icon" aria-hidden="true">⇅</span></th>
-                    <th data-col="notes" tabindex="0" role="columnheader">Observaciones <span class="sort-icon" aria-hidden="true">⇅</span></th>
-                </tr>
-            </thead>
-            <tbody id="tableBody"></tbody>
-        </table>
+    <!-- Vista Tabla -->
+    <div class="view-table">
+        <div class="table-wrapper" id="tableContainer">
+            <table role="grid" aria-label="Colección de cámaras analógicas">
+                <thead>
+                    <tr>
+                        <th data-col="brand" tabindex="0" role="columnheader" aria-sort="ascending">Marca <span class="sort-icon" aria-hidden="true">⇅</span></th>
+                        <th data-col="model" tabindex="0" role="columnheader">Modelo <span class="sort-icon" aria-hidden="true">⇅</span></th>
+                        <th data-col="serial" tabindex="0" role="columnheader">Nº Serie <span class="sort-icon" aria-hidden="true">⇅</span></th>
+                        <th data-col="status" tabindex="0" role="columnheader">Estado <span class="sort-icon" aria-hidden="true">⇅</span></th>
+                        <th data-col="speeds" tabindex="0" role="columnheader">Velocidades <span class="sort-icon" aria-hidden="true">⇅</span></th>
+                        <th data-col="film" tabindex="0" role="columnheader">Carrete <span class="sort-icon" aria-hidden="true">⇅</span></th>
+                        <th data-col="notes" tabindex="0" role="columnheader">Observaciones <span class="sort-icon" aria-hidden="true">⇅</span></th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Vista Cards -->
+    <div class="view-cards">
+        <div class="cards-view" id="cardsContainer"></div>
     </div>
 </div>
 
@@ -321,12 +578,21 @@
 
     const DOM = {
         tableBody: $('#tableBody'),
+        cardsContainer: $('#cardsContainer'),
+        tableContainer: $('#tableContainer'),
+        statsDashboard: $('#statsDashboard'),
         searchInput: $('#searchInput'),
         brandFilter: $('#brandFilter'),
         statusFilter: $('#statusFilter'),
         speedsFilter: $('#speedsFilter'),
         filmFilter: $('#filmFilter'),
         resetBtn: $('#resetBtn'),
+        exportBtn: $('#exportBtn'),
+        printBtn: $('#printBtn'),
+        themeBtn: $('#themeBtn'),
+        tableViewBtn: $('#tableViewBtn'),
+        cardsViewBtn: $('#cardsViewBtn'),
+        groupByBrand: $('#groupByBrand'),
         countDisplay: $('#countDisplay'),
         headers: $$('th[data-col]')
     };
@@ -335,7 +601,10 @@
     // ESTADO
     // ============================================
     const state = {
-        sort: { column: 'brand', direction: 'asc' }
+        sort: { column: 'brand', direction: 'asc' },
+        view: 'table', // 'table' o 'cards'
+        theme: 'dark', // 'dark' o 'light'
+        groupByBrand: false
     };
 
     // ============================================
@@ -425,6 +694,10 @@
         const sp = CONFIG.speeds[cam.speeds ?? CONFIG.defaults.speeds];
         const fm = CONFIG.film[cam.film ?? CONFIG.defaults.film];
 
+        // Agregar clases para resaltado
+        if (cam.status === 'error') tr.classList.add('urgent');
+        if (cam.film === 'yes') tr.classList.add('has-film');
+
         tr.appendChild(createCell(cam.brand, 'col-brand'));
         tr.appendChild(createCell(cam.model, 'col-model'));
         tr.appendChild(createCell(cam.serial, 'col-serial'));
@@ -449,9 +722,108 @@
         return tr;
     };
 
+    const createCard = (cam) => {
+        const card = document.createElement('div');
+        card.className = 'camera-card';
+        
+        if (cam.status === 'error') card.classList.add('urgent');
+        if (cam.film === 'yes') card.classList.add('has-film');
+
+        const st = CONFIG.status[cam.status];
+        const sp = CONFIG.speeds[cam.speeds ?? CONFIG.defaults.speeds];
+        const fm = CONFIG.film[cam.film ?? CONFIG.defaults.film];
+
+        // Header
+        const header = document.createElement('div');
+        header.className = 'card-header';
+        
+        const brand = document.createElement('div');
+        brand.className = 'card-brand';
+        brand.textContent = cam.brand;
+        
+        const model = document.createElement('div');
+        model.className = 'card-model';
+        model.textContent = cam.model;
+        
+        const serial = document.createElement('div');
+        serial.className = 'card-serial';
+        serial.textContent = `S/N: ${cam.serial}`;
+        
+        header.appendChild(brand);
+        header.appendChild(model);
+        header.appendChild(serial);
+
+        // Info
+        const info = document.createElement('div');
+        info.className = 'card-info';
+
+        const createInfoRow = (label, badge) => {
+            const row = document.createElement('div');
+            row.className = 'card-info-row';
+            const labelSpan = document.createElement('span');
+            labelSpan.textContent = label;
+            row.appendChild(labelSpan);
+            row.appendChild(badge);
+            return row;
+        };
+
+        info.appendChild(createInfoRow('Estado:', createBadge(st.label, st.cssClass)));
+        info.appendChild(createInfoRow('Velocidades:', createBadge(sp.label, sp.cssClass)));
+        info.appendChild(createInfoRow('Carrete:', createBadge(fm.label, fm.cssClass)));
+
+        // Notes
+        const notes = document.createElement('div');
+        notes.className = 'card-notes';
+        notes.textContent = cam.notes || 'Sin observaciones';
+
+        card.appendChild(header);
+        card.appendChild(info);
+        card.appendChild(notes);
+
+        return card;
+    };
+
+    const renderStats = (cameras) => {
+        const stats = {
+            total: cameras.length,
+            ok: cameras.filter(c => c.status === 'ok').length,
+            warning: cameras.filter(c => c.status === 'warning').length,
+            error: cameras.filter(c => c.status === 'error').length,
+            pending: cameras.filter(c => c.status === 'pending').length,
+            withFilm: cameras.filter(c => c.film === 'yes').length
+        };
+
+        const dashboard = DOM.statsDashboard;
+        dashboard.innerHTML = '';
+
+        const createStatCard = (number, label, color) => {
+            const card = document.createElement('div');
+            card.className = 'stat-card';
+            
+            const num = document.createElement('div');
+            num.className = 'stat-number';
+            num.textContent = number;
+            num.style.color = color;
+            
+            const lbl = document.createElement('div');
+            lbl.className = 'stat-label';
+            lbl.textContent = label;
+            
+            card.appendChild(num);
+            card.appendChild(lbl);
+            return card;
+        };
+
+        dashboard.appendChild(createStatCard(stats.total, 'Total', 'var(--accent)'));
+        dashboard.appendChild(createStatCard(stats.ok, 'Funcionales', 'var(--ok-tx)'));
+        dashboard.appendChild(createStatCard(stats.warning, 'Con detalles', 'var(--warn-tx)'));
+        dashboard.appendChild(createStatCard(stats.error, 'A reparar', 'var(--err-tx)'));
+        dashboard.appendChild(createStatCard(stats.withFilm, 'Con carrete', 'var(--warn-tx)'));
+    };
+
     const renderTable = (cameras) => {
         const tbody = DOM.tableBody;
-        tbody.innerHTML = ''; // Limpiar
+        tbody.innerHTML = '';
 
         if (cameras.length === 0) {
             const tr = document.createElement('tr');
@@ -467,6 +839,116 @@
             tbody.appendChild(fragment);
         }
 
+        DOM.countDisplay.textContent = cameras.length;
+    };
+
+    const renderCards = (cameras) => {
+        const container = DOM.cardsContainer;
+        container.innerHTML = '';
+
+        if (cameras.length === 0) {
+            const empty = document.createElement('div');
+            empty.className = 'empty-state';
+            empty.textContent = 'No se encontraron cámaras con los filtros seleccionados';
+            container.appendChild(empty);
+        } else {
+            const fragment = document.createDocumentFragment();
+            cameras.forEach(cam => fragment.appendChild(createCard(cam)));
+            container.appendChild(fragment);
+        }
+
+        DOM.countDisplay.textContent = cameras.length;
+    };
+
+    const renderGroupedTable = (cameras) => {
+        const container = DOM.tableContainer;
+        container.innerHTML = '';
+
+        if (cameras.length === 0) {
+            const empty = document.createElement('div');
+            empty.className = 'empty-state';
+            empty.textContent = 'No se encontraron cámaras con los filtros seleccionados';
+            container.appendChild(empty);
+            return;
+        }
+
+        // Agrupar por marca
+        const groups = {};
+        cameras.forEach(cam => {
+            if (!groups[cam.brand]) groups[cam.brand] = [];
+            groups[cam.brand].push(cam);
+        });
+
+        const fragment = document.createDocumentFragment();
+
+        Object.keys(groups).sort(Utils.compareText).forEach(brand => {
+            const brandCameras = groups[brand];
+            
+            const group = document.createElement('div');
+            group.className = 'brand-group';
+            
+            const header = document.createElement('div');
+            header.className = 'brand-group-header';
+            header.innerHTML = `${brand} <span class="brand-group-count">${brandCameras.length} cámara${brandCameras.length > 1 ? 's' : ''}</span>`;
+            header.addEventListener('click', () => {
+                group.classList.toggle('collapsed');
+            });
+            
+            const content = document.createElement('div');
+            content.className = 'brand-group-content';
+            
+            const table = document.createElement('table');
+            table.innerHTML = `
+                <thead>
+                    <tr>
+                        <th>Modelo</th>
+                        <th>Nº Serie</th>
+                        <th>Estado</th>
+                        <th>Velocidades</th>
+                        <th>Carrete</th>
+                        <th>Observaciones</th>
+                    </tr>
+                </thead>
+            `;
+            
+            const tbody = document.createElement('tbody');
+            brandCameras.forEach(cam => {
+                const tr = document.createElement('tr');
+                if (cam.status === 'error') tr.classList.add('urgent');
+                if (cam.film === 'yes') tr.classList.add('has-film');
+                
+                const st = CONFIG.status[cam.status];
+                const sp = CONFIG.speeds[cam.speeds ?? CONFIG.defaults.speeds];
+                const fm = CONFIG.film[cam.film ?? CONFIG.defaults.film];
+                
+                tr.appendChild(createCell(cam.model, 'col-model'));
+                tr.appendChild(createCell(cam.serial, 'col-serial'));
+                
+                const statusCell = document.createElement('td');
+                statusCell.appendChild(createBadge(st.label, st.cssClass));
+                tr.appendChild(statusCell);
+                
+                const speedsCell = document.createElement('td');
+                speedsCell.appendChild(createBadge(sp.label, sp.cssClass));
+                tr.appendChild(speedsCell);
+                
+                const filmCell = document.createElement('td');
+                filmCell.appendChild(createBadge(fm.label, fm.cssClass));
+                tr.appendChild(filmCell);
+                
+                tr.appendChild(createCell(cam.notes, 'col-notes'));
+                
+                tbody.appendChild(tr);
+            });
+            
+            table.appendChild(tbody);
+            content.appendChild(table);
+            group.appendChild(header);
+            group.appendChild(content);
+            fragment.appendChild(group);
+        });
+
+        container.appendChild(fragment);
         DOM.countDisplay.textContent = cameras.length;
     };
 
@@ -490,7 +972,17 @@
         const filters = getFilters();
         const filtered = filterCameras(CAMERAS, filters);
         const sorted = sortCameras(filtered, state.sort);
-        renderTable(sorted);
+        
+        renderStats(CAMERAS); // Siempre mostrar stats de todas las cámaras
+        
+        if (state.groupByBrand && state.view === 'table') {
+            renderGroupedTable(sorted);
+        } else if (state.view === 'table') {
+            renderTable(sorted);
+        } else {
+            renderCards(sorted);
+        }
+        
         updateHeaderIcons();
     };
 
@@ -503,6 +995,9 @@
         save() {
             const payload = {
                 sort: state.sort,
+                view: state.view,
+                theme: state.theme,
+                groupByBrand: state.groupByBrand,
                 filters: {
                     search: DOM.searchInput.value,
                     brand: DOM.brandFilter.value,
@@ -523,6 +1018,9 @@
                 
                 const data = JSON.parse(raw);
                 if (data?.sort?.column) state.sort = data.sort;
+                if (data?.view) state.view = data.view;
+                if (data?.theme) state.theme = data.theme;
+                if (data?.groupByBrand !== undefined) state.groupByBrand = data.groupByBrand;
 
                 if (data?.filters) {
                     const f = data.filters;
@@ -595,6 +1093,63 @@
         DOM.searchInput.focus();
     };
 
+    const toggleTheme = () => {
+        state.theme = state.theme === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', state.theme);
+        DOM.themeBtn.textContent = state.theme === 'dark' ? '🌙' : '☀️';
+        Storage.save();
+    };
+
+    const toggleView = (view) => {
+        state.view = view;
+        document.body.classList.toggle('cards-mode', view === 'cards');
+        DOM.tableViewBtn.classList.toggle('active', view === 'table');
+        DOM.cardsViewBtn.classList.toggle('active', view === 'cards');
+        Storage.save();
+        render();
+    };
+
+    const toggleGrouping = () => {
+        state.groupByBrand = DOM.groupByBrand.checked;
+        Storage.save();
+        render();
+    };
+
+    const exportToCSV = () => {
+        const filters = getFilters();
+        const filtered = filterCameras(CAMERAS, filters);
+        const sorted = sortCameras(filtered, state.sort);
+
+        const headers = ['Marca', 'Modelo', 'Nº Serie', 'Estado', 'Velocidades', 'Carrete', 'Observaciones'];
+        const rows = sorted.map(cam => {
+            const st = CONFIG.status[cam.status]?.label ?? '';
+            const sp = CONFIG.speeds[cam.speeds ?? CONFIG.defaults.speeds]?.label ?? '';
+            const fm = CONFIG.film[cam.film ?? CONFIG.defaults.film]?.label ?? '';
+            
+            return [
+                cam.brand,
+                cam.model,
+                cam.serial,
+                st,
+                sp,
+                fm,
+                cam.notes
+            ].map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(',');
+        });
+
+        const csv = [headers.join(','), ...rows].join('\n');
+        const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = `camaras_${new Date().toISOString().split('T')[0]}.csv`;
+        link.click();
+        URL.revokeObjectURL(link.href);
+    };
+
+    const printTable = () => {
+        window.print();
+    };
+
     const handleSort = (column) => {
         if (state.sort.column === column) {
             state.sort.direction = state.sort.direction === 'asc' ? 'desc' : 'asc';
@@ -621,6 +1176,18 @@
         populateBrandFilter();
         Storage.load();
 
+        // Aplicar tema guardado
+        document.documentElement.setAttribute('data-theme', state.theme);
+        DOM.themeBtn.textContent = state.theme === 'dark' ? '🌙' : '☀️';
+        
+        // Aplicar vista guardada
+        document.body.classList.toggle('cards-mode', state.view === 'cards');
+        DOM.tableViewBtn.classList.toggle('active', state.view === 'table');
+        DOM.cardsViewBtn.classList.toggle('active', state.view === 'cards');
+        
+        // Aplicar agrupación guardada
+        DOM.groupByBrand.checked = state.groupByBrand;
+
         // Event listeners con delegación donde sea posible
         DOM.searchInput.addEventListener('input', () => { Storage.save(); scheduleRender(); });
         
@@ -629,6 +1196,12 @@
         });
 
         DOM.resetBtn.addEventListener('click', resetFilters);
+        DOM.exportBtn.addEventListener('click', exportToCSV);
+        DOM.printBtn.addEventListener('click', printTable);
+        DOM.themeBtn.addEventListener('click', toggleTheme);
+        DOM.tableViewBtn.addEventListener('click', () => toggleView('table'));
+        DOM.cardsViewBtn.addEventListener('click', () => toggleView('cards'));
+        DOM.groupByBrand.addEventListener('change', toggleGrouping);
 
         // Delegación para headers
         const thead = document.querySelector('thead');
