@@ -1134,10 +1134,32 @@
             groups[cam.brand].push(cam);
         });
 
+        // Función para ordenar cámaras por prioridad
+        const sortByPriority = (a, b) => {
+            // Prioridad 1: Estado error (reparar)
+            if (a.status === 'error' && b.status !== 'error') return -1;
+            if (a.status !== 'error' && b.status === 'error') return 1;
+            
+            // Prioridad 2: Con carrete cargado
+            if (a.loaded === 'yes' && b.loaded !== 'yes') return -1;
+            if (a.loaded !== 'yes' && b.loaded === 'yes') return 1;
+            
+            // Prioridad 3: Estado warning (detalles)
+            if (a.status === 'warning' && b.status !== 'warning') return -1;
+            if (a.status !== 'warning' && b.status === 'warning') return 1;
+            
+            // Prioridad 4: Estado pending
+            if (a.status === 'pending' && b.status !== 'pending') return -1;
+            if (a.status !== 'pending' && b.status === 'pending') return 1;
+            
+            // Desempate por modelo
+            return Utils.compareText(a.model, b.model);
+        };
+
         const fragment = document.createDocumentFragment();
 
         Object.keys(groups).sort(Utils.compareText).forEach(brand => {
-            const brandCameras = groups[brand];
+            const brandCameras = groups[brand].sort(sortByPriority);
             
             const group = document.createElement('div');
             group.className = 'brand-group';
