@@ -19,6 +19,7 @@
             --warn-bg: rgba(245, 158, 11, 0.15); --warn-tx: #fcd34d;
             --err-bg: rgba(239, 68, 68, 0.15); --err-tx: #fca5a5;
             --pend-bg: rgba(139, 92, 246, 0.15); --pend-tx: #c4b5fd;
+            --repair-bg: rgba(249, 115, 22, 0.15); --repair-tx: #fdba74;
         }
 
         [data-theme="light"] {
@@ -34,6 +35,7 @@
             --warn-bg: rgba(245, 158, 11, 0.18); --warn-tx: #8b3a00;
             --err-bg: rgba(220, 38, 38, 0.18); --err-tx: #8b1010;
             --pend-bg: rgba(139, 92, 246, 0.18); --pend-tx: #4a1585;
+            --repair-bg: rgba(249, 115, 22, 0.18); --repair-tx: #c2410c;
         }
 
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -398,6 +400,7 @@
         .st-warn { background: var(--warn-bg); color: var(--warn-tx); }
         .st-err { background: var(--err-bg); color: var(--err-tx); }
         .st-pend { background: var(--pend-bg); color: var(--pend-tx); }
+        .st-repair { background: var(--repair-bg); color: var(--repair-tx); }
 
         .empty-state {
             text-align: center;
@@ -610,6 +613,7 @@
             <option value="ok">🟢 Funcional</option>
             <option value="warning">⚠️ Detalles</option>
             <option value="error">🔴 Reparar</option>
+            <option value="repair">🔧 En reparación</option>
             <option value="pending">⏳ Pendiente</option>
         </select>
 
@@ -731,10 +735,11 @@
 
     const CONFIG = Object.freeze({
         status: {
-            ok:      { label: 'Funcional',   cssClass: 'st-ok' },
-            warning: { label: 'Detalles',    cssClass: 'st-warn' },
-            error:   { label: 'Reparar',     cssClass: 'st-err' },
-            pending: { label: 'Por Revelar', cssClass: 'st-pend' }
+            ok:      { label: 'Funcional',      cssClass: 'st-ok' },
+            warning: { label: 'Detalles',       cssClass: 'st-warn' },
+            error:   { label: 'Reparar',        cssClass: 'st-err' },
+            repair:  { label: 'En reparación',  cssClass: 'st-repair' },
+            pending: { label: 'Por Revelar',    cssClass: 'st-pend' }
         },
         speeds: {
             ok:      { label: 'Correctas', cssClass: 'st-ok' },
@@ -1035,6 +1040,7 @@
             ok: cameras.filter(c => c.status === 'ok').length,
             warning: cameras.filter(c => c.status === 'warning').length,
             error: cameras.filter(c => c.status === 'error').length,
+            repair: cameras.filter(c => c.status === 'repair').length,
             pending: cameras.filter(c => c.status === 'pending').length,
             withFilm: cameras.filter(c => c.loaded === 'yes').length
         };
@@ -1064,6 +1070,7 @@
         dashboard.appendChild(createStatCard(stats.ok, 'Funcionales', 'var(--ok-tx)'));
         dashboard.appendChild(createStatCard(stats.warning, 'Con detalles', 'var(--warn-tx)'));
         dashboard.appendChild(createStatCard(stats.error, 'A reparar', 'var(--err-tx)'));
+        dashboard.appendChild(createStatCard(stats.repair, 'En reparación', 'var(--repair-tx)'));
         dashboard.appendChild(createStatCard(stats.withFilm, 'Cargadas', 'var(--warn-tx)'));
     };
 
@@ -1136,7 +1143,11 @@
 
         // Función para ordenar cámaras por prioridad
         const sortByPriority = (a, b) => {
-            // Prioridad 1: Estado error (reparar)
+            // Prioridad 1: En reparación
+            if (a.status === 'repair' && b.status !== 'repair') return -1;
+            if (a.status !== 'repair' && b.status === 'repair') return 1;
+
+            // Prioridad 2: Estado error (reparar)
             if (a.status === 'error' && b.status !== 'error') return -1;
             if (a.status !== 'error' && b.status === 'error') return 1;
             
