@@ -3,57 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Colección · Cámaras Analógicas</title>
+    <title>Cámaras Analógicas — Dashboard</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📷</text></svg>">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Crimson+Pro:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         /* ============================================
-           VARIABLES DE TEMA
+           VARIABLES
         ============================================ */
         :root {
-            --bg-body:         #16100a;
-            --bg-surface:      #1e160f;
-            --bg-hover:        #2a1f13;
-            --bg-raised:       #231a0e;
-            --border:          #3d2c1a;
-            --border-subtle:   #2c2014;
-            --text-main:       #e8d4b0;
-            --text-muted:      #9a7f5a;
-            --text-faint:      #6a5540;
-            --accent:          #c89040;
-            --accent-dim:      rgba(200,144,64,0.13);
-            --accent-glow:     rgba(200,144,64,0.07);
-            --film-bg:         #0d0906;
-            --film-hole:       #16100a;
+            --bg-body:       #09090b;
+            --bg-surface:    #18181b;
+            --bg-hover:      #27272a;
+            --bg-raised:     #1c1c1f;
+            --border:        #3f3f46;
+            --border-subtle: #27272a;
+            --text-main:     #f4f4f5;
+            --text-muted:    #a1a1aa;
+            --text-faint:    #71717a;
+            --accent:        #8b5cf6;
+            --accent-dim:    rgba(139,92,246,0.14);
+            --accent-glow:   rgba(139,92,246,0.06);
 
-            --ok-bg:     rgba(34,110,65,0.18);    --ok-tx:     #7ecfa0;  --ok-bd:     rgba(34,110,65,0.45);
-            --warn-bg:   rgba(180,120,20,0.18);   --warn-tx:   #e8b840;  --warn-bd:   rgba(180,120,20,0.45);
-            --err-bg:    rgba(160,40,40,0.18);    --err-tx:    #f08080;  --err-bd:    rgba(160,40,40,0.45);
-            --pend-bg:   rgba(100,60,160,0.18);   --pend-tx:   #b8a0f0;  --pend-bd:   rgba(100,60,160,0.45);
-            --repair-bg: rgba(180,90,20,0.18);    --repair-tx: #f0a060;  --repair-bd: rgba(180,90,20,0.45);
+            --ok-color:     #22c55e;
+            --warn-color:   #f59e0b;
+            --err-color:    #ef4444;
+            --pend-color:   #a855f7;
+            --repair-color: #f97316;
+
+            --ok-bg:     rgba(34,197,94,0.1);    --ok-tx:     #86efac;   --ok-bd:     rgba(34,197,94,0.3);
+            --warn-bg:   rgba(245,158,11,0.1);   --warn-tx:   #fcd34d;   --warn-bd:   rgba(245,158,11,0.3);
+            --err-bg:    rgba(239,68,68,0.1);    --err-tx:    #fca5a5;   --err-bd:    rgba(239,68,68,0.3);
+            --pend-bg:   rgba(168,85,247,0.1);   --pend-tx:   #d8b4fe;   --pend-bd:   rgba(168,85,247,0.3);
+            --repair-bg: rgba(249,115,22,0.1);   --repair-tx: #fed7aa;   --repair-bd: rgba(249,115,22,0.3);
         }
 
         [data-theme="light"] {
-            --bg-body:         #ede1cb;
-            --bg-surface:      #f8f0e0;
-            --bg-hover:        #e4d4bc;
-            --bg-raised:       #f0e6d2;
-            --border:          #c4a87a;
-            --border-subtle:   #dcc8a4;
-            --text-main:       #2a1c0e;
-            --text-muted:      #7a5a38;
-            --text-faint:      #a08060;
-            --accent:          #8b4e16;
-            --accent-dim:      rgba(139,78,22,0.1);
-            --accent-glow:     rgba(139,78,22,0.06);
-            --film-bg:         #0d0906;
-            --film-hole:       #ede1cb;
+            --bg-body:       #fafafa;
+            --bg-surface:    #ffffff;
+            --bg-hover:      #f4f4f5;
+            --bg-raised:     #f7f7f8;
+            --border:        #e4e4e7;
+            --border-subtle: #f4f4f5;
+            --text-main:     #09090b;
+            --text-muted:    #71717a;
+            --text-faint:    #a1a1aa;
+            --accent:        #7c3aed;
+            --accent-dim:    rgba(124,58,237,0.08);
+            --accent-glow:   rgba(124,58,237,0.04);
 
-            --ok-bg:     rgba(34,110,65,0.12);    --ok-tx:     #1a6035;  --ok-bd:     rgba(34,110,65,0.3);
-            --warn-bg:   rgba(140,80,10,0.12);    --warn-tx:   #7a4800;  --warn-bd:   rgba(140,80,10,0.3);
-            --err-bg:    rgba(160,30,30,0.12);    --err-tx:    #8b1a1a;  --err-bd:    rgba(160,30,30,0.3);
-            --pend-bg:   rgba(80,40,140,0.12);    --pend-tx:   #4a1a8a;  --pend-bd:   rgba(80,40,140,0.3);
-            --repair-bg: rgba(160,70,10,0.12);    --repair-tx: #8b3c00;  --repair-bd: rgba(160,70,10,0.3);
+            --ok-bg:     rgba(34,197,94,0.08);    --ok-tx:     #166534;   --ok-bd:     rgba(34,197,94,0.25);
+            --warn-bg:   rgba(245,158,11,0.08);   --warn-tx:   #92400e;   --warn-bd:   rgba(245,158,11,0.25);
+            --err-bg:    rgba(239,68,68,0.08);    --err-tx:    #7f1d1d;   --err-bd:    rgba(239,68,68,0.25);
+            --pend-bg:   rgba(168,85,247,0.08);   --pend-tx:   #4c1d95;   --pend-bd:   rgba(168,85,247,0.25);
+            --repair-bg: rgba(249,115,22,0.08);   --repair-tx: #7c2d12;   --repair-bd: rgba(249,115,22,0.25);
         }
 
         /* ============================================
@@ -62,180 +64,231 @@
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            background-color: var(--bg-body);
+            background: var(--bg-body);
             color: var(--text-main);
-            font-family: 'Crimson Pro', Georgia, serif;
-            font-size: 16px;
-            line-height: 1.6;
+            font-family: 'DM Sans', system-ui, sans-serif;
+            font-size: 14px;
+            line-height: 1.5;
             min-height: 100vh;
-            padding-bottom: 30px;
         }
 
-        /* ============================================
-           FILM STRIP
-        ============================================ */
-        .filmstrip {
-            height: 26px;
-            background: var(--film-bg);
-            background-image: radial-gradient(
-                ellipse 7px 9px at 50% 50%,
-                var(--film-hole) 44%,
-                transparent 45%
-            );
-            background-size: 30px 100%;
-            background-position: 5px 0;
-            z-index: 200;
-        }
-
-        .filmstrip-top {
-            position: sticky;
-            top: 0;
-        }
-
-        .filmstrip-bottom {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-        }
-
-        /* ============================================
-           CONTENEDOR
-        ============================================ */
         .container {
             max-width: 1440px;
             margin: 0 auto;
-            padding: clamp(14px, 3vw, 32px);
+            padding: clamp(16px, 3vw, 28px);
         }
 
         /* ============================================
-           CABECERA EDITORIAL
+           CABECERA
         ============================================ */
-        .site-header {
+        .app-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 20px;
+            gap: 16px;
             padding-bottom: 20px;
             margin-bottom: 20px;
-            border-bottom: 1px solid var(--border);
+            border-bottom: 1px solid var(--border-subtle);
             flex-wrap: wrap;
         }
 
-        .header-brand {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-        }
-
-        .header-logo {
-            width: 50px;
-            height: 50px;
-            background: var(--bg-raised);
-            border: 1px solid var(--border);
-            border-radius: 3px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            color: var(--text-muted);
-        }
-
-        .header-logo svg {
-            width: 28px;
-            height: 28px;
-        }
-
-        .header-titles h1 {
-            font-family: 'Playfair Display', Georgia, serif;
-            font-size: clamp(1.35rem, 3vw, 1.9rem);
-            font-weight: 700;
-            line-height: 1.1;
-            letter-spacing: -0.02em;
-            color: var(--text-main);
-        }
-
-        .header-meta {
+        .app-brand {
             display: flex;
             align-items: center;
             gap: 12px;
-            margin-top: 5px;
-            flex-wrap: wrap;
         }
 
-        .header-subtitle {
-            font-family: 'IBM Plex Mono', monospace;
-            font-size: 0.65rem;
-            letter-spacing: 0.16em;
-            text-transform: uppercase;
-            color: var(--text-muted);
-        }
-
-        .header-count-badge {
-            font-family: 'IBM Plex Mono', monospace;
-            font-size: 0.7rem;
-            color: var(--accent);
+        .brand-icon {
+            width: 36px;
+            height: 36px;
             background: var(--accent-dim);
             border: 1px solid var(--border);
-            padding: 2px 9px;
-            border-radius: 2px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+            flex-shrink: 0;
+        }
+
+        .brand-icon svg { width: 18px; height: 18px; }
+
+        .brand-text h1 {
+            font-size: 1rem;
+            font-weight: 600;
+            line-height: 1.2;
+            letter-spacing: -0.01em;
+        }
+
+        .brand-meta {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 2px;
+        }
+
+        .brand-sub {
+            font-size: 0.72rem;
+            color: var(--text-faint);
+        }
+
+        .count-pill {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.68rem;
+            color: var(--accent);
+            background: var(--accent-dim);
+            border: 1px solid rgba(139,92,246,0.25);
+            padding: 1px 7px;
+            border-radius: 9999px;
+        }
+
+        [data-theme="light"] .count-pill {
+            border-color: rgba(124,58,237,0.2);
+        }
+
+        .header-right {
+            display: flex;
+            gap: 6px;
+            align-items: center;
         }
 
         /* ============================================
-           ESTADÍSTICAS
+           STATS GRID
         ============================================ */
         .stats-dashboard {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(105px, 1fr));
+            grid-template-columns: repeat(6, 1fr);
             gap: 10px;
-            margin-bottom: 20px;
+            margin-bottom: 14px;
         }
 
-        @media (max-width: 640px) {
-            .stats-dashboard { grid-template-columns: repeat(3, 1fr); }
-        }
-        @media (max-width: 400px) {
-            .stats-dashboard { grid-template-columns: repeat(2, 1fr); }
-        }
+        @media (max-width: 900px) { .stats-dashboard { grid-template-columns: repeat(3, 1fr); } }
+        @media (max-width: 500px) { .stats-dashboard { grid-template-columns: repeat(2, 1fr); } }
 
         .stat-card {
             background: var(--bg-surface);
             border: 1px solid var(--border);
-            border-radius: 3px;
-            padding: 14px 12px 10px;
-            position: relative;
-            overflow: hidden;
-            transition: transform 0.18s, box-shadow 0.18s;
-        }
-
-        .stat-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 3px;
-            background: currentColor;
-            opacity: 0.7;
+            border-radius: 10px;
+            padding: 14px 14px 12px;
+            border-left: 3px solid var(--dot-color, var(--accent));
+            transition: box-shadow 0.18s;
         }
 
         .stat-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            box-shadow: 0 0 0 1px var(--dot-color, var(--accent)), 0 4px 16px rgba(0,0,0,0.3);
         }
 
-        .stat-number {
-            font-family: 'Playfair Display', Georgia, serif;
-            font-size: 2.1rem;
-            font-weight: 700;
-            line-height: 1;
-            margin-bottom: 6px;
+        .stat-header {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 8px;
+        }
+
+        .stat-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--dot-color, var(--accent));
+            flex-shrink: 0;
         }
 
         .stat-label {
-            font-family: 'IBM Plex Mono', monospace;
-            font-size: 0.6rem;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
+            font-size: 0.7rem;
+            font-weight: 500;
             color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            line-height: 1;
+            color: var(--dot-color, var(--accent));
+            margin-bottom: 10px;
+        }
+
+        .stat-bar {
+            height: 3px;
+            background: var(--border);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .stat-bar-fill {
+            height: 100%;
+            background: var(--dot-color, var(--accent));
+            border-radius: 2px;
+            opacity: 0.6;
+            transition: width 0.4s ease;
+        }
+
+        /* ============================================
+           BRAND CHART
+        ============================================ */
+        .chart-section {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 16px 18px;
+            margin-bottom: 14px;
+        }
+
+        .chart-section-title {
+            font-size: 0.72rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            margin-bottom: 14px;
+        }
+
+        .chart-bars {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .chart-row {
+            display: grid;
+            grid-template-columns: 80px 1fr 32px;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .chart-brand-label {
+            font-size: 0.78rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            text-align: right;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .chart-track {
+            height: 8px;
+            background: var(--bg-hover);
+            border-radius: 4px;
+            overflow: hidden;
+            display: flex;
+        }
+
+        .chart-segment {
+            height: 100%;
+            transition: width 0.4s ease;
+        }
+
+        .chart-segment:first-child { border-radius: 4px 0 0 4px; }
+        .chart-segment:last-child  { border-radius: 0 4px 4px 0; }
+        .chart-segment:only-child  { border-radius: 4px; }
+
+        .chart-count {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.72rem;
+            color: var(--text-faint);
+            text-align: right;
         }
 
         /* ============================================
@@ -244,11 +297,11 @@
         .controls-bar {
             background: var(--bg-surface);
             border: 1px solid var(--border);
-            border-radius: 3px;
-            padding: 12px 14px;
-            margin-bottom: 18px;
+            border-radius: 10px;
+            padding: 10px 12px;
+            margin-bottom: 14px;
             display: flex;
-            gap: 9px;
+            gap: 8px;
             flex-wrap: wrap;
             align-items: center;
         }
@@ -260,75 +313,108 @@
             background: var(--bg-body);
             border: 1px solid var(--border);
             color: var(--text-main);
-            padding: 7px 11px;
-            border-radius: 2px;
+            padding: 6px 10px;
+            border-radius: 6px;
             font-size: 0.82rem;
-            font-family: 'IBM Plex Mono', monospace;
+            font-family: 'DM Sans', sans-serif;
             outline: none;
-            transition: border-color 0.2s, color 0.2s;
+            transition: border-color 0.15s, box-shadow 0.15s;
         }
 
         select {
             -webkit-appearance: none;
             appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%239a7f5a' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%2371717a' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
             background-repeat: no-repeat;
-            background-position: right 9px center;
-            padding-right: 26px;
+            background-position: right 8px center;
+            padding-right: 24px;
         }
 
-        input:focus, select:focus { border-color: var(--accent); }
+        input:focus, select:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px var(--accent-dim);
+        }
 
         .search-box {
             flex: 1;
-            min-width: 200px;
-            padding-left: 32px;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%239a7f5a' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E");
+            min-width: 180px;
+            padding-left: 30px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='%2371717a' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E");
             background-repeat: no-repeat;
-            background-position: 10px center;
+            background-position: 9px center;
         }
 
-        .btn { cursor: pointer; }
-        .btn:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-dim); }
-        .btn.active { background: var(--accent); border-color: var(--accent); color: #1a0f07; }
+        .btn {
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .btn:hover {
+            border-color: var(--accent);
+            background: var(--accent-dim);
+            color: var(--accent);
+        }
+
+        .btn.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #fff;
+        }
+
+        [data-theme="light"] .btn.active { color: #fff; }
 
         .icon-btn {
-            padding: 7px 8px;
+            padding: 6px 7px;
             display: flex;
             align-items: center;
             justify-content: center;
         }
+
         .icon-btn svg { width: 15px; height: 15px; }
 
         .btn-group-actions {
             display: flex;
-            gap: 6px;
-            padding-right: 10px;
+            gap: 4px;
+            padding-right: 8px;
             border-right: 1px solid var(--border);
         }
 
         .btn-group-views {
             display: flex;
-            gap: 6px;
-            padding-right: 10px;
+            gap: 4px;
+            padding-right: 8px;
             border-right: 1px solid var(--border);
         }
 
         .btn-group-theme {
             display: flex;
+            gap: 4px;
+        }
+
+        .controls-filters {
+            display: flex;
             gap: 6px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .controls-right {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+            margin-left: auto;
+            flex-wrap: wrap;
         }
 
         .group-by-label {
             display: flex;
             align-items: center;
             gap: 5px;
-            font-family: 'IBM Plex Mono', monospace;
-            font-size: 0.72rem;
+            font-size: 0.78rem;
             color: var(--text-muted);
             cursor: pointer;
             user-select: none;
-            padding-right: 10px;
+            padding-right: 8px;
             border-right: 1px solid var(--border);
         }
 
@@ -342,36 +428,29 @@
 
         .group-by-label.hidden { display: none; }
 
-        .controls-filters {
-            display: flex;
-            gap: 7px;
-            flex-wrap: wrap;
-            align-items: center;
-        }
-
-        .controls-right {
-            display: flex;
-            gap: 7px;
-            align-items: center;
-            margin-left: auto;
-            flex-wrap: wrap;
-        }
-
         /* ============================================
-           BADGES (estilo estampilla)
+           BADGES (pill con dot)
         ============================================ */
         .badge {
             display: inline-flex;
             align-items: center;
-            padding: 2px 7px;
-            border-radius: 2px;
-            font-family: 'IBM Plex Mono', monospace;
-            font-size: 0.65rem;
+            gap: 5px;
+            padding: 2px 8px 2px 6px;
+            border-radius: 9999px;
+            font-size: 0.7rem;
             font-weight: 500;
-            letter-spacing: 0.07em;
-            text-transform: uppercase;
-            border: 1px solid;
+            letter-spacing: 0.01em;
             white-space: nowrap;
+            border: 1px solid;
+        }
+
+        .badge::before {
+            content: '';
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: currentColor;
+            flex-shrink: 0;
         }
 
         .st-ok     { background: var(--ok-bg);     color: var(--ok-tx);     border-color: var(--ok-bd);     }
@@ -386,84 +465,76 @@
         .table-wrapper {
             overflow-x: auto;
             border: 1px solid var(--border);
-            border-radius: 3px;
+            border-radius: 10px;
             background: var(--bg-surface);
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            font-family: 'Crimson Pro', Georgia, serif;
-            font-size: 1rem;
+            font-size: 0.875rem;
             white-space: nowrap;
         }
 
         thead {
             position: sticky;
-            top: 26px;
+            top: 0;
             z-index: 10;
             background: var(--bg-raised);
-            border-bottom: 2px solid var(--accent);
+            border-bottom: 1px solid var(--border);
         }
 
         th {
             text-align: left;
-            padding: 11px 16px;
-            font-family: 'IBM Plex Mono', monospace;
-            font-size: 0.63rem;
+            padding: 10px 14px;
+            font-size: 0.68rem;
+            font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 0.13em;
-            color: var(--text-muted);
-            font-weight: 500;
+            letter-spacing: 0.07em;
+            color: var(--text-faint);
             cursor: pointer;
             user-select: none;
-            transition: color 0.2s;
+            transition: color 0.15s;
         }
 
         th:hover, th.active { color: var(--accent); }
-        th .sort-icon { margin-left: 4px; opacity: 0.3; font-size: 0.6rem; }
+        th .sort-icon { margin-left: 3px; opacity: 0.35; font-size: 0.6rem; }
         th.active .sort-icon { opacity: 1; }
         th:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
 
         td {
-            padding: 9px 16px;
+            padding: 9px 14px;
             border-bottom: 1px solid var(--border-subtle);
             color: var(--text-main);
-            font-size: 1rem;
+            font-size: 0.875rem;
         }
 
         tbody tr:last-child td { border-bottom: none; }
-        tbody tr:hover { background: var(--accent-glow); }
 
-        tbody tr.urgent td:first-child  { border-left: 3px solid var(--err-tx); }
-        tbody tr.has-film td:first-child { border-left: 3px solid var(--warn-tx); }
+        tbody tr:hover { background: var(--bg-hover); }
+
+        tbody tr.urgent td:first-child  { border-left: 3px solid var(--err-color); }
+        tbody tr.has-film td:first-child { border-left: 3px solid var(--warn-color); }
 
         .col-brand {
-            font-family: 'IBM Plex Mono', monospace;
             font-size: 0.72rem;
-            font-weight: 500;
-            letter-spacing: 0.05em;
+            font-weight: 600;
             text-transform: uppercase;
-            color: var(--text-muted);
+            letter-spacing: 0.05em;
+            color: var(--text-faint);
         }
 
-        .col-model {
-            font-family: 'Playfair Display', Georgia, serif;
-            font-size: 1rem;
-            font-weight: 600;
-        }
+        .col-model { font-weight: 500; }
 
         .col-serial {
-            font-family: 'IBM Plex Mono', monospace;
+            font-family: 'DM Mono', monospace;
             font-size: 0.78rem;
             color: var(--text-faint);
         }
 
         .col-notes {
-            font-family: 'Crimson Pro', Georgia, serif;
-            font-size: 0.92rem;
+            font-size: 0.82rem;
             color: var(--text-muted);
-            font-style: italic;
             white-space: normal;
             min-width: 180px;
             max-width: 380px;
@@ -471,7 +542,7 @@
         }
 
         /* ============================================
-           VISTA CARDS (foto print)
+           VISTA CARDS
         ============================================ */
         .view-table { display: block; }
         .view-cards { display: none; }
@@ -480,190 +551,154 @@
 
         .cards-view {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(min(270px, 100%), 1fr));
-            gap: 18px;
+            grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
+            gap: 14px;
         }
 
-        @media (max-width: 640px) {
-            .cards-view { grid-template-columns: 1fr; gap: 14px; }
-        }
+        @media (max-width: 640px) { .cards-view { grid-template-columns: 1fr; } }
 
         .camera-card {
             background: var(--bg-surface);
             border: 1px solid var(--border);
-            border-radius: 3px;
+            border-radius: 12px;
             overflow: hidden;
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: transform 0.18s, box-shadow 0.18s;
+            position: relative;
         }
 
         @media (hover: hover) {
             .camera-card:hover {
-                transform: translateY(-3px);
-                box-shadow: 0 10px 28px rgba(0,0,0,0.45);
+                transform: translateY(-2px);
+                box-shadow: 0 8px 24px rgba(0,0,0,0.4);
             }
         }
 
-        .camera-card.urgent  { border-top: 3px solid var(--err-tx);  }
-        .camera-card.has-film { border-top: 3px solid var(--warn-tx); }
+        .camera-card.urgent  { border-color: var(--err-bd);  }
+        .camera-card.has-film { border-color: var(--warn-bd); }
 
-        /* Área visual de la tarjeta */
-        .card-visual {
-            height: 72px;
-            background: var(--bg-raised);
-            border-bottom: 1px solid var(--border-subtle);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-            color: var(--text-faint);
+        .card-status-stripe {
+            height: 4px;
+            width: 100%;
         }
 
-        .card-visual::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background:
-                radial-gradient(circle at 15% 50%, var(--accent-dim) 0%, transparent 55%),
-                radial-gradient(circle at 85% 50%, var(--accent-glow) 0%, transparent 55%);
-        }
-
-        .card-visual svg {
-            width: 32px;
-            height: 32px;
-            opacity: 0.45;
-            position: relative;
-        }
-
-        .card-brand-tag {
-            position: absolute;
-            top: 7px;
-            right: 8px;
-            font-family: 'IBM Plex Mono', monospace;
-            font-size: 0.58rem;
-            font-weight: 500;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: var(--text-muted);
-            background: var(--bg-surface);
-            border: 1px solid var(--border);
-            padding: 2px 6px;
-            border-radius: 1px;
-        }
-
-        /* Cuerpo de tarjeta */
         .card-body {
-            padding: 13px 15px 15px;
+            padding: 14px 15px 15px;
         }
 
-        .card-header {
-            margin-bottom: 11px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid var(--border-subtle);
+        .card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
         }
+
+        .card-header { flex: 1; min-width: 0; }
 
         .card-brand {
-            font-family: 'IBM Plex Mono', monospace;
-            font-size: 0.62rem;
-            letter-spacing: 0.13em;
+            font-size: 0.65rem;
+            font-weight: 600;
             text-transform: uppercase;
-            color: var(--text-muted);
+            letter-spacing: 0.08em;
+            color: var(--text-faint);
+            margin-bottom: 2px;
         }
 
         .card-model {
-            font-family: 'Playfair Display', Georgia, serif;
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 600;
             color: var(--text-main);
-            margin-top: 2px;
-            line-height: 1.2;
+            line-height: 1.25;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .card-serial {
-            font-family: 'IBM Plex Mono', monospace;
+            font-family: 'DM Mono', monospace;
             font-size: 0.7rem;
             color: var(--text-faint);
             margin-top: 3px;
         }
 
+        .card-status-badge {
+            flex-shrink: 0;
+            margin-left: 10px;
+        }
+
+        .card-divider {
+            height: 1px;
+            background: var(--border-subtle);
+            margin: 12px 0;
+        }
+
         .card-info {
             display: flex;
             flex-direction: column;
-            gap: 6px;
-            margin-bottom: 11px;
+            gap: 5px;
         }
 
         .card-info-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 0.85rem;
+            font-size: 0.82rem;
         }
 
-        /* Estilar las etiquetas de info sin tocar el JS */
         .card-info-row > span:first-child {
-            font-family: 'IBM Plex Mono', monospace;
-            font-size: 0.62rem;
-            letter-spacing: 0.09em;
-            text-transform: uppercase;
+            font-size: 0.7rem;
             color: var(--text-faint);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 500;
         }
 
         .card-notes {
-            font-family: 'Crimson Pro', Georgia, serif;
-            font-size: 0.88rem;
-            font-style: italic;
+            font-size: 0.8rem;
             color: var(--text-muted);
             line-height: 1.45;
-            padding-top: 9px;
+            margin-top: 10px;
+            padding-top: 10px;
             border-top: 1px solid var(--border-subtle);
         }
 
         /* ============================================
            GRUPOS POR MARCA
         ============================================ */
-        .brand-group {
-            margin-bottom: 18px;
-        }
+        .brand-group { margin-bottom: 16px; }
 
         .brand-group-header {
             background: var(--bg-raised);
             border: 1px solid var(--border);
-            border-radius: 3px 3px 0 0;
-            padding: 10px 16px;
-            font-family: 'Playfair Display', Georgia, serif;
-            font-size: 1.05rem;
+            border-radius: 8px 8px 0 0;
+            padding: 10px 14px;
             font-weight: 600;
+            font-size: 0.9rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
             cursor: pointer;
             user-select: none;
-            transition: background 0.2s;
+            transition: background 0.15s;
         }
 
         .brand-group-header:hover { background: var(--bg-hover); }
 
         .brand-group-count {
-            font-family: 'IBM Plex Mono', monospace;
-            font-size: 0.68rem;
-            color: var(--text-muted);
+            font-family: 'DM Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--text-faint);
             font-weight: 400;
-            letter-spacing: 0.05em;
         }
 
         .brand-group-content {
             border: 1px solid var(--border);
             border-top: none;
-            border-radius: 0 0 3px 3px;
+            border-radius: 0 0 8px 8px;
             overflow: hidden;
         }
 
         .brand-group.collapsed .brand-group-content { display: none; }
-
-        .brand-group-content thead {
-            background: var(--bg-raised);
-        }
+        .brand-group-content thead { background: var(--bg-raised); }
 
         /* ============================================
            EMPTY STATE
@@ -671,92 +706,98 @@
         .empty-state {
             text-align: center;
             padding: 52px 24px;
-            color: var(--text-muted);
-            font-family: 'Playfair Display', Georgia, serif;
-            font-style: italic;
-            font-size: 1.1rem;
+            color: var(--text-faint);
+            font-size: 0.9rem;
         }
 
         /* ============================================
            RESPONSIVE
         ============================================ */
         @media (max-width: 768px) {
-            .site-header { flex-direction: column; align-items: flex-start; }
             .controls-bar { flex-direction: column; align-items: stretch; }
             .controls-right { margin-left: 0; }
             .search-box { min-width: 100%; }
-            th { padding: 8px 10px; }
-            td { padding: 8px 10px; font-size: 0.92rem; }
         }
 
         /* ============================================
            ANIMACIONES
         ============================================ */
         @media (prefers-reduced-motion: no-preference) {
-            tbody tr {
-                animation: rowIn 0.18s ease-out;
-            }
-            @keyframes rowIn {
-                from { opacity: 0; transform: translateY(-3px); }
-                to   { opacity: 1; transform: translateY(0); }
-            }
-            .camera-card {
-                animation: cardIn 0.2s ease-out;
-            }
-            @keyframes cardIn {
-                from { opacity: 0; transform: translateY(5px); }
-                to   { opacity: 1; transform: translateY(0); }
-            }
+            tbody tr     { animation: rowIn 0.15s ease-out; }
+            .camera-card { animation: cardIn 0.18s ease-out; }
+            .chart-segment { animation: barIn 0.4s ease-out; }
+
+            @keyframes rowIn  { from { opacity: 0; transform: translateY(-2px); } to { opacity: 1; transform: none; } }
+            @keyframes cardIn { from { opacity: 0; transform: translateY(4px);  } to { opacity: 1; transform: none; } }
+            @keyframes barIn  { from { transform: scaleX(0); transform-origin: left; } to { transform: scaleX(1); } }
         }
 
         /* ============================================
            PRINT
         ============================================ */
         @media print {
-            .filmstrip, .controls-bar, .stats-dashboard, .filmstrip-bottom { display: none; }
-            body { background: white; color: black; padding-bottom: 0; }
+            .controls-bar, .stats-dashboard, .chart-section, .app-header { display: none; }
+            body { background: white; color: black; }
             .table-wrapper { border: 1px solid #000; }
         }
     </style>
 </head>
 <body>
 
-<!-- Film strip superior (sticky) -->
-<div class="filmstrip filmstrip-top"></div>
-
 <div class="container">
 
-    <!-- Cabecera editorial -->
-    <header class="site-header">
-        <div class="header-brand">
-            <div class="header-logo">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Cabecera -->
+    <header class="app-header">
+        <div class="app-brand">
+            <div class="brand-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
                     <circle cx="12" cy="13" r="4"/>
                 </svg>
             </div>
-            <div class="header-titles">
-                <h1>Colección de Cámaras</h1>
-                <div class="header-meta">
-                    <span class="header-subtitle">Catálogo analógico personal</span>
-                    <span class="header-count-badge"><span id="countDisplay" role="status" aria-live="polite">0</span> cámaras</span>
+            <div class="brand-text">
+                <h1>Cámaras Analógicas</h1>
+                <div class="brand-meta">
+                    <span class="brand-sub">Colección personal</span>
+                    <span class="count-pill" id="countDisplay" role="status" aria-live="polite">0</span>
                 </div>
             </div>
         </div>
+        <div class="header-right">
+            <a href="index.html" class="btn" style="text-decoration:none;font-size:0.78rem;" title="Ver diseño original">← v1</a>
+            <button type="button" id="themeBtn" class="btn icon-btn" aria-label="Cambiar tema" title="Cambiar tema">
+                <svg class="theme-icon-dark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                </svg>
+                <svg class="theme-icon-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none">
+                    <circle cx="12" cy="12" r="5"/>
+                    <line x1="12" y1="1" x2="12" y2="3"/>
+                    <line x1="12" y1="21" x2="12" y2="23"/>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                    <line x1="1" y1="12" x2="3" y2="12"/>
+                    <line x1="21" y1="12" x2="23" y2="12"/>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                </svg>
+            </button>
+        </div>
     </header>
 
-    <!-- Dashboard de Estadísticas -->
+    <!-- Stats -->
     <div class="stats-dashboard" id="statsDashboard"></div>
 
-    <!-- Barra de controles -->
+    <!-- Gráfica por marca -->
+    <div class="chart-section" id="brandChart"></div>
+
+    <!-- Controles -->
     <div class="controls-bar header-controls">
-        <input type="search" id="searchInput" class="search-box" placeholder="Buscar marca, modelo, notas…" aria-label="Buscar cámaras">
+        <input type="search" id="searchInput" class="search-box" placeholder="Buscar modelo, marca, notas…" aria-label="Buscar cámaras">
 
         <div class="controls-filters">
             <select id="brandFilter" aria-label="Filtrar por marca">
-                <option value="all">Todas las Marcas</option>
+                <option value="all">Todas las marcas</option>
             </select>
-
             <select id="statusFilter" aria-label="Filtrar por estado">
                 <option value="all">Todos los estados</option>
                 <option value="ok">Funcional</option>
@@ -765,14 +806,12 @@
                 <option value="repair">En reparación</option>
                 <option value="pending">Pendiente</option>
             </select>
-
             <select id="speedsFilter" aria-label="Filtrar por velocidades">
                 <option value="all">Velocidades</option>
                 <option value="ok">Correctas</option>
                 <option value="bad">Fallan</option>
                 <option value="unknown">N/D</option>
             </select>
-
             <select id="filmFilter" aria-label="Filtrar por carrete">
                 <option value="all">Carrete</option>
                 <option value="yes">Probado</option>
@@ -827,26 +866,6 @@
             <label class="group-by-label" id="groupByLabel">
                 <input type="checkbox" id="groupByBrand"> Agrupar
             </label>
-
-            <div class="btn-group-theme">
-                <a href="index.html" class="btn" style="text-decoration:none;font-size:0.78rem;padding:7px 11px;" title="Ver diseño original">← v1</a>
-                <button type="button" id="themeBtn" class="btn icon-btn" aria-label="Cambiar tema" title="Cambiar tema">
-                    <svg class="theme-icon-dark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-                    </svg>
-                    <svg class="theme-icon-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none">
-                        <circle cx="12" cy="12" r="5"/>
-                        <line x1="12" y1="1" x2="12" y2="3"/>
-                        <line x1="12" y1="21" x2="12" y2="23"/>
-                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
-                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-                        <line x1="1" y1="12" x2="3" y2="12"/>
-                        <line x1="21" y1="12" x2="23" y2="12"/>
-                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
-                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-                    </svg>
-                </button>
-            </div>
         </div>
     </div>
 
@@ -878,25 +897,19 @@
 
 </div>
 
-<!-- Film strip inferior (fixed) -->
-<div class="filmstrip filmstrip-bottom"></div>
-
 <script>
-(function() {
+(function () {
     'use strict';
 
-    // ============================================
-    // DATOS (cargados desde JSON)
-    // ============================================
     let CAMERAS = [];
 
     const CONFIG = Object.freeze({
         status: {
-            ok:      { label: 'Funcional',      cssClass: 'st-ok' },
-            warning: { label: 'Detalles',       cssClass: 'st-warn' },
-            error:   { label: 'Reparar',        cssClass: 'st-err' },
-            repair:  { label: 'En reparación',  cssClass: 'st-repair' },
-            pending: { label: 'Por Revelar',    cssClass: 'st-pend' }
+            ok:      { label: 'Funcional',     cssClass: 'st-ok',     color: '#22c55e' },
+            warning: { label: 'Detalles',      cssClass: 'st-warn',   color: '#f59e0b' },
+            error:   { label: 'Reparar',       cssClass: 'st-err',    color: '#ef4444' },
+            repair:  { label: 'En reparación', cssClass: 'st-repair', color: '#f97316' },
+            pending: { label: 'Por Revelar',   cssClass: 'st-pend',   color: '#a855f7' }
         },
         speeds: {
             ok:      { label: 'Correctas', cssClass: 'st-ok' },
@@ -911,7 +924,7 @@
             yes: { label: 'Sí', cssClass: 'st-warn' },
             no:  { label: 'No', cssClass: 'st-pend' }
         },
-        defaults: { speeds: 'unknown', film: 'no', loaded: 'no' },
+        defaults:   { speeds: 'unknown', film: 'no', loaded: 'no' },
         storageKey: 'cameraCollection.v3'
     });
 
@@ -922,42 +935,24 @@
 
     const Utils = {
         compareText: (a, b) => collator.compare(String(a ?? ''), String(b ?? '')),
-
-        normalize: (value) => String(value ?? '')
-            .toLowerCase()
-            .normalize('NFD')
-            .replace(/\p{Diacritic}/gu, '')
-            .trim(),
-
+        normalize:   (v)    => String(v ?? '').toLowerCase().normalize('NFD').replace(/\p{Diacritic}/gu, '').trim(),
         debounce(fn, delay = 150) {
-            let timeoutId;
-            return (...args) => {
-                clearTimeout(timeoutId);
-                timeoutId = setTimeout(() => fn(...args), delay);
-            };
+            let t;
+            return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), delay); };
         },
-
-        parseSerial(serial) {
-            const s = String(serial ?? '').trim();
-            if (!s || s === '-') return null;
-            const n = parseInt(s, 10);
+        parseSerial(s) {
+            const v = String(s ?? '').trim();
+            if (!v || v === '-') return null;
+            const n = parseInt(v, 10);
             return Number.isFinite(n) ? n : null;
         },
-
         buildSearchIndex(cam) {
-            const { status, speeds, film, loaded } = CONFIG;
-            const statusCfg = status[cam.status] ?? {};
-            const speedsCfg = speeds[cam.speeds ?? CONFIG.defaults.speeds] ?? {};
-            const filmCfg   = film[cam.film ?? CONFIG.defaults.film] ?? {};
-            const loadedCfg = loaded[cam.loaded ?? CONFIG.defaults.loaded] ?? {};
-
-            return Utils.normalize([
-                cam.brand, cam.model, cam.serial, cam.notes,
-                cam.status, statusCfg.label,
-                cam.speeds, speedsCfg.label,
-                cam.film,   filmCfg.label,
-                cam.loaded, loadedCfg.label
-            ].join(' '));
+            const st = CONFIG.status[cam.status] ?? {};
+            const sp = CONFIG.speeds[cam.speeds ?? CONFIG.defaults.speeds] ?? {};
+            const fm = CONFIG.film[cam.film ?? CONFIG.defaults.film] ?? {};
+            const ld = CONFIG.loaded[cam.loaded ?? CONFIG.defaults.loaded] ?? {};
+            return Utils.normalize([cam.brand, cam.model, cam.serial, cam.notes,
+                cam.status, st.label, cam.speeds, sp.label, cam.film, fm.label, cam.loaded, ld.label].join(' '));
         }
     };
 
@@ -974,6 +969,7 @@
         cardsContainer: $('#cardsContainer'),
         tableContainer: $('#tableContainer'),
         statsDashboard: $('#statsDashboard'),
+        brandChart:     $('#brandChart'),
         searchInput:    $('#searchInput'),
         brandFilter:    $('#brandFilter'),
         statusFilter:   $('#statusFilter'),
@@ -991,18 +987,15 @@
         headers:        $$('th[data-col]')
     };
 
-    // ============================================
-    // ESTADO
-    // ============================================
     const state = {
-        sort:        { column: 'brand', direction: 'asc' },
-        view:        'table',
-        theme:       'dark',
+        sort:         { column: 'brand', direction: 'asc' },
+        view:         'table',
+        theme:        'dark',
         groupByBrand: false
     };
 
     // ============================================
-    // LÓGICA DE NEGOCIO
+    // FILTRADO & ORDENACIÓN
     // ============================================
     const getFilters = () => ({
         search: Utils.normalize(DOM.searchInput.value),
@@ -1026,26 +1019,18 @@
 
     const sortCameras = (cameras, { column, direction }) => {
         const dir = direction === 'asc' ? 1 : -1;
-        const comparators = {
-            serial: (a, b) => {
-                const nA = Utils.parseSerial(a.serial);
-                const nB = Utils.parseSerial(b.serial);
-                if (nA === null && nB === null) return 0;
-                if (nA === null) return 1;
-                if (nB === null) return -1;
-                return nA - nB;
-            },
+        const cmp = {
+            serial:  (a, b) => { const nA = Utils.parseSerial(a.serial), nB = Utils.parseSerial(b.serial); if (nA === null && nB === null) return 0; if (nA === null) return 1; if (nB === null) return -1; return nA - nB; },
             status:  (a, b) => Utils.compareText(CONFIG.status[a.status]?.label ?? '', CONFIG.status[b.status]?.label ?? ''),
             speeds:  (a, b) => Utils.compareText(CONFIG.speeds[a.speeds ?? CONFIG.defaults.speeds]?.label ?? '', CONFIG.speeds[b.speeds ?? CONFIG.defaults.speeds]?.label ?? ''),
             film:    (a, b) => Utils.compareText(CONFIG.film[a.film ?? CONFIG.defaults.film]?.label ?? '', CONFIG.film[b.film ?? CONFIG.defaults.film]?.label ?? ''),
             loaded:  (a, b) => Utils.compareText(CONFIG.loaded[a.loaded ?? CONFIG.defaults.loaded]?.label ?? '', CONFIG.loaded[b.loaded ?? CONFIG.defaults.loaded]?.label ?? ''),
             default: (a, b) => Utils.compareText(a[column] ?? '', b[column] ?? '')
         };
-        const compare = comparators[column] ?? comparators.default;
+        const compare = cmp[column] ?? cmp.default;
         return [...cameras].sort((a, b) => {
-            const cmp = compare(a, b);
-            if (cmp !== 0) return cmp * dir;
-            return Utils.compareText(`${a.brand} ${a.model} ${a.serial}`, `${b.brand} ${b.model} ${b.serial}`);
+            const r = compare(a, b);
+            return r !== 0 ? r * dir : Utils.compareText(`${a.brand} ${a.model} ${a.serial}`, `${b.brand} ${b.model} ${b.serial}`);
         });
     };
 
@@ -1053,15 +1038,15 @@
     // RENDERIZADO
     // ============================================
     const createBadge = (text, cssClass) => {
-        const span = document.createElement('span');
-        span.className = `badge ${cssClass}`;
-        span.textContent = text;
-        return span;
+        const s = document.createElement('span');
+        s.className = `badge ${cssClass}`;
+        s.textContent = text;
+        return s;
     };
 
-    const createCell = (text, className) => {
+    const createCell = (text, cls) => {
         const td = document.createElement('td');
-        if (className) td.className = className;
+        if (cls) td.className = cls;
         td.textContent = text;
         return td;
     };
@@ -1080,356 +1065,372 @@
         tr.appendChild(createCell(cam.model,  'col-model'));
         tr.appendChild(createCell(cam.serial, 'col-serial'));
 
-        const statusCell = document.createElement('td');
-        statusCell.appendChild(createBadge(st.label, st.cssClass));
-        tr.appendChild(statusCell);
-
-        const speedsCell = document.createElement('td');
-        speedsCell.appendChild(createBadge(sp.label, sp.cssClass));
-        tr.appendChild(speedsCell);
-
-        const filmCell = document.createElement('td');
-        filmCell.appendChild(createBadge(fm.label, fm.cssClass));
-        tr.appendChild(filmCell);
-
-        const loadedCell = document.createElement('td');
-        loadedCell.appendChild(createBadge(ld.label, ld.cssClass));
-        tr.appendChild(loadedCell);
+        [st, sp, fm, ld].forEach(cfg => {
+            const td = document.createElement('td');
+            td.appendChild(createBadge(cfg.label, cfg.cssClass));
+            tr.appendChild(td);
+        });
 
         tr.appendChild(createCell(cam.notes, 'col-notes'));
         return tr;
     };
 
-    // SVG de cámara para el área visual de la tarjeta
-    const CAMERA_SVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
-        <circle cx="12" cy="13" r="4"/>
-    </svg>`;
-
     const createCard = (cam) => {
         const card = document.createElement('div');
         card.className = 'camera-card';
-
-        if (cam.status === 'error') card.classList.add('urgent');
-        if (cam.loaded === 'yes')   card.classList.add('has-film');
 
         const st = CONFIG.status[cam.status];
         const sp = CONFIG.speeds[cam.speeds ?? CONFIG.defaults.speeds];
         const fm = CONFIG.film[cam.film ?? CONFIG.defaults.film];
         const ld = CONFIG.loaded[cam.loaded ?? CONFIG.defaults.loaded];
 
-        // Área visual
-        const visual = document.createElement('div');
-        visual.className = 'card-visual';
-        visual.innerHTML = CAMERA_SVG;
+        if (cam.status === 'error') card.classList.add('urgent');
+        if (cam.loaded === 'yes')   card.classList.add('has-film');
 
-        const brandTag = document.createElement('div');
-        brandTag.className = 'card-brand-tag';
-        brandTag.textContent = cam.brand;
-        visual.appendChild(brandTag);
+        // Franja de color de estado
+        const stripe = document.createElement('div');
+        stripe.className = 'card-status-stripe';
+        stripe.style.background = st.color ?? '#8b5cf6';
 
         // Cuerpo
         const body = document.createElement('div');
         body.className = 'card-body';
 
-        // Header
+        // Top: header + status badge
+        const top = document.createElement('div');
+        top.className = 'card-top';
+
         const header = document.createElement('div');
         header.className = 'card-header';
 
-        const brandDiv = document.createElement('div');
-        brandDiv.className = 'card-brand';
-        brandDiv.textContent = cam.brand;
+        const brandEl = document.createElement('div');
+        brandEl.className = 'card-brand';
+        brandEl.textContent = cam.brand;
 
-        const modelDiv = document.createElement('div');
-        modelDiv.className = 'card-model';
-        modelDiv.textContent = cam.model;
+        const modelEl = document.createElement('div');
+        modelEl.className = 'card-model';
+        modelEl.textContent = cam.model;
 
-        const serialDiv = document.createElement('div');
-        serialDiv.className = 'card-serial';
-        serialDiv.textContent = `S/N: ${cam.serial}`;
+        const serialEl = document.createElement('div');
+        serialEl.className = 'card-serial';
+        serialEl.textContent = `S/N ${cam.serial}`;
 
-        header.appendChild(brandDiv);
-        header.appendChild(modelDiv);
-        header.appendChild(serialDiv);
+        header.appendChild(brandEl);
+        header.appendChild(modelEl);
+        header.appendChild(serialEl);
+
+        const statusBadge = document.createElement('div');
+        statusBadge.className = 'card-status-badge';
+        statusBadge.appendChild(createBadge(st.label, st.cssClass));
+
+        top.appendChild(header);
+        top.appendChild(statusBadge);
 
         // Info rows
+        const divider = document.createElement('div');
+        divider.className = 'card-divider';
+
         const info = document.createElement('div');
         info.className = 'card-info';
 
-        const createInfoRow = (label, badge) => {
+        const makeRow = (label, badge) => {
             const row = document.createElement('div');
             row.className = 'card-info-row';
-            const labelSpan = document.createElement('span');
-            labelSpan.textContent = label;
-            row.appendChild(labelSpan);
+            const lbl = document.createElement('span');
+            lbl.textContent = label;
+            row.appendChild(lbl);
             row.appendChild(badge);
             return row;
         };
 
-        info.appendChild(createInfoRow('Estado:',      createBadge(st.label, st.cssClass)));
-        info.appendChild(createInfoRow('Velocidades:', createBadge(sp.label, sp.cssClass)));
-        info.appendChild(createInfoRow('Carrete:',     createBadge(fm.label, fm.cssClass)));
-        info.appendChild(createInfoRow('Cargada:',     createBadge(ld.label, ld.cssClass)));
+        info.appendChild(makeRow('Velocidades:', createBadge(sp.label, sp.cssClass)));
+        info.appendChild(makeRow('Carrete:',     createBadge(fm.label, fm.cssClass)));
+        info.appendChild(makeRow('Cargada:',     createBadge(ld.label, ld.cssClass)));
 
-        // Notes
+        // Notas
         const notes = document.createElement('div');
         notes.className = 'card-notes';
         notes.textContent = cam.notes || 'Sin observaciones';
 
-        body.appendChild(header);
+        body.appendChild(top);
+        body.appendChild(divider);
         body.appendChild(info);
         body.appendChild(notes);
 
-        card.appendChild(visual);
+        card.appendChild(stripe);
         card.appendChild(body);
         return card;
     };
 
-    // Colores para las stat cards (top bar via currentColor)
-    const STAT_COLORS = {
-        total:    'var(--accent)',
-        ok:       'var(--ok-tx)',
-        warning:  'var(--warn-tx)',
-        error:    'var(--err-tx)',
-        repair:   'var(--repair-tx)',
-        withFilm: 'var(--warn-tx)'
-    };
-
+    // ---- Stats ----
     const renderStats = (cameras) => {
-        const stats = {
-            total:    cameras.length,
-            ok:       cameras.filter(c => c.status === 'ok').length,
-            warning:  cameras.filter(c => c.status === 'warning').length,
-            error:    cameras.filter(c => c.status === 'error').length,
-            repair:   cameras.filter(c => c.status === 'repair').length,
-            withFilm: cameras.filter(c => c.loaded === 'yes').length
-        };
+        const total = cameras.length;
+        const stats = [
+            { label: 'Total',        value: total,                                             color: '#8b5cf6',                      pct: 100 },
+            { label: 'Funcionales',  value: cameras.filter(c => c.status === 'ok').length,     color: '#22c55e', pct: 0 },
+            { label: 'Detalles',     value: cameras.filter(c => c.status === 'warning').length,color: '#f59e0b', pct: 0 },
+            { label: 'A reparar',    value: cameras.filter(c => c.status === 'error').length,  color: '#ef4444', pct: 0 },
+            { label: 'En taller',    value: cameras.filter(c => c.status === 'repair').length, color: '#f97316', pct: 0 },
+            { label: 'Cargadas',     value: cameras.filter(c => c.loaded === 'yes').length,    color: '#06b6d4', pct: 0 }
+        ];
+        stats.forEach(s => { if (s.pct === 0) s.pct = total ? Math.round(s.value / total * 100) : 0; });
 
         const dashboard = DOM.statsDashboard;
         dashboard.innerHTML = '';
+        const frag = document.createDocumentFragment();
 
-        const items = [
-            { key: 'total',    value: stats.total,    label: 'Total' },
-            { key: 'ok',       value: stats.ok,       label: 'Funcionales' },
-            { key: 'warning',  value: stats.warning,  label: 'Detalles' },
-            { key: 'error',    value: stats.error,    label: 'A reparar' },
-            { key: 'repair',   value: stats.repair,   label: 'En taller' },
-            { key: 'withFilm', value: stats.withFilm, label: 'Cargadas' }
-        ];
-
-        const fragment = document.createDocumentFragment();
-        items.forEach(({ key, value, label }) => {
+        stats.forEach(({ label, value, color, pct }) => {
             const card = document.createElement('div');
             card.className = 'stat-card';
-            card.style.color = STAT_COLORS[key];
+            card.style.setProperty('--dot-color', color);
+
+            const hdr = document.createElement('div');
+            hdr.className = 'stat-header';
+            const dot = document.createElement('span');
+            dot.className = 'stat-dot';
+            const lbl = document.createElement('span');
+            lbl.className = 'stat-label';
+            lbl.textContent = label;
+            hdr.appendChild(dot);
+            hdr.appendChild(lbl);
 
             const num = document.createElement('div');
             num.className = 'stat-number';
             num.textContent = value;
 
-            const lbl = document.createElement('div');
-            lbl.className = 'stat-label';
-            lbl.textContent = label;
+            const bar = document.createElement('div');
+            bar.className = 'stat-bar';
+            const fill = document.createElement('div');
+            fill.className = 'stat-bar-fill';
+            fill.style.width = `${pct}%`;
+            bar.appendChild(fill);
 
+            card.appendChild(hdr);
             card.appendChild(num);
-            card.appendChild(lbl);
-            fragment.appendChild(card);
+            card.appendChild(bar);
+            frag.appendChild(card);
         });
 
-        dashboard.appendChild(fragment);
+        dashboard.appendChild(frag);
     };
 
+    // ---- Brand chart ----
+    const renderBrandChart = () => {
+        const el = DOM.brandChart;
+        if (!el) return;
+        el.innerHTML = '';
+
+        if (CAMERAS.length === 0) return;
+
+        const title = document.createElement('div');
+        title.className = 'chart-section-title';
+        title.textContent = 'Distribución por marca';
+        el.appendChild(title);
+
+        const brands = {};
+        CAMERAS.forEach(cam => {
+            if (!brands[cam.brand]) brands[cam.brand] = { total: 0, ok: 0, warn: 0, err: 0, repair: 0, pend: 0 };
+            brands[cam.brand].total++;
+            const s = cam.status;
+            if (s === 'ok')      brands[cam.brand].ok++;
+            else if (s === 'warning') brands[cam.brand].warn++;
+            else if (s === 'error')   brands[cam.brand].err++;
+            else if (s === 'repair')  brands[cam.brand].repair++;
+            else if (s === 'pending') brands[cam.brand].pend++;
+        });
+
+        const max = Math.max(...Object.values(brands).map(b => b.total));
+        const sorted = Object.entries(brands).sort((a, b) => b[1].total - a[1].total);
+
+        const bars = document.createElement('div');
+        bars.className = 'chart-bars';
+
+        sorted.forEach(([brand, data]) => {
+            const row = document.createElement('div');
+            row.className = 'chart-row';
+
+            const lbl = document.createElement('span');
+            lbl.className = 'chart-brand-label';
+            lbl.textContent = brand;
+            lbl.title = brand;
+
+            const track = document.createElement('div');
+            track.className = 'chart-track';
+
+            const segments = [
+                { count: data.ok,     color: '#22c55e' },
+                { count: data.warn,   color: '#f59e0b' },
+                { count: data.err,    color: '#ef4444' },
+                { count: data.repair, color: '#f97316' },
+                { count: data.pend,   color: '#a855f7' }
+            ];
+
+            segments.forEach(({ count, color }) => {
+                if (count === 0) return;
+                const seg = document.createElement('div');
+                seg.className = 'chart-segment';
+                seg.style.width = `${(count / max * 100).toFixed(1)}%`;
+                seg.style.background = color;
+                seg.title = `${count}`;
+                track.appendChild(seg);
+            });
+
+            const cnt = document.createElement('span');
+            cnt.className = 'chart-count';
+            cnt.textContent = data.total;
+
+            row.appendChild(lbl);
+            row.appendChild(track);
+            row.appendChild(cnt);
+            bars.appendChild(row);
+        });
+
+        el.appendChild(bars);
+    };
+
+    // ---- Table ----
     const renderTable = (cameras) => {
         const tbody = DOM.tableBody;
         tbody.innerHTML = '';
-
         if (cameras.length === 0) {
             const tr = document.createElement('tr');
             const td = document.createElement('td');
-            td.colSpan = 8;
-            td.className = 'empty-state';
+            td.colSpan = 8; td.className = 'empty-state';
             td.textContent = 'No se encontraron cámaras con los filtros seleccionados';
-            tr.appendChild(td);
-            tbody.appendChild(tr);
+            tr.appendChild(td); tbody.appendChild(tr);
         } else {
-            const fragment = document.createDocumentFragment();
-            cameras.forEach(cam => fragment.appendChild(createRow(cam)));
-            tbody.appendChild(fragment);
+            const frag = document.createDocumentFragment();
+            cameras.forEach(cam => frag.appendChild(createRow(cam)));
+            tbody.appendChild(frag);
         }
-
         DOM.countDisplay.textContent = cameras.length;
     };
 
+    // ---- Cards ----
     const renderCards = (cameras) => {
-        const container = DOM.cardsContainer;
-        container.innerHTML = '';
-
+        const c = DOM.cardsContainer;
+        c.innerHTML = '';
         if (cameras.length === 0) {
             const empty = document.createElement('div');
             empty.className = 'empty-state';
             empty.textContent = 'No se encontraron cámaras con los filtros seleccionados';
-            container.appendChild(empty);
+            c.appendChild(empty);
         } else {
-            const fragment = document.createDocumentFragment();
-            cameras.forEach(cam => fragment.appendChild(createCard(cam)));
-            container.appendChild(fragment);
+            const frag = document.createDocumentFragment();
+            cameras.forEach(cam => frag.appendChild(createCard(cam)));
+            c.appendChild(frag);
         }
-
         DOM.countDisplay.textContent = cameras.length;
     };
 
+    // ---- Grouped table ----
     const sortByPriority = (a, b) => {
-        if (a.status === 'repair'  && b.status !== 'repair')  return -1;
-        if (a.status !== 'repair'  && b.status === 'repair')  return 1;
-        if (a.status === 'error'   && b.status !== 'error')   return -1;
-        if (a.status !== 'error'   && b.status === 'error')   return 1;
-        if (a.loaded === 'yes'     && b.loaded !== 'yes')     return -1;
-        if (a.loaded !== 'yes'     && b.loaded === 'yes')     return 1;
-        if (a.status === 'warning' && b.status !== 'warning') return -1;
-        if (a.status !== 'warning' && b.status === 'warning') return 1;
-        if (a.status === 'pending' && b.status !== 'pending') return -1;
-        if (a.status !== 'pending' && b.status === 'pending') return 1;
+        const p = { repair: 0, error: 1, warning: 2, pending: 3, ok: 4 };
+        const pa = p[a.status] ?? 9, pb = p[b.status] ?? 9;
+        if (a.loaded === 'yes' && b.loaded !== 'yes' && pa >= 2) return -1;
+        if (a.loaded !== 'yes' && b.loaded === 'yes' && pb >= 2) return 1;
+        if (pa !== pb) return pa - pb;
         return Utils.compareText(a.model, b.model);
     };
 
     const renderGroupedTable = (cameras) => {
-        let groupedContainer = document.getElementById('groupedTableContainer');
-        if (!groupedContainer) {
-            groupedContainer = document.createElement('div');
-            groupedContainer.id = 'groupedTableContainer';
-            DOM.tableContainer.parentNode.appendChild(groupedContainer);
+        let gc = document.getElementById('groupedTableContainer');
+        if (!gc) {
+            gc = document.createElement('div');
+            gc.id = 'groupedTableContainer';
+            DOM.tableContainer.parentNode.appendChild(gc);
         }
-
-        groupedContainer.innerHTML = '';
+        gc.innerHTML = '';
 
         if (cameras.length === 0) {
-            const empty = document.createElement('div');
-            empty.className = 'empty-state';
-            empty.textContent = 'No se encontraron cámaras con los filtros seleccionados';
-            groupedContainer.appendChild(empty);
+            const e = document.createElement('div');
+            e.className = 'empty-state';
+            e.textContent = 'No se encontraron cámaras con los filtros seleccionados';
+            gc.appendChild(e);
             DOM.countDisplay.textContent = 0;
             return;
         }
 
         const groups = {};
-        cameras.forEach(cam => {
-            if (!groups[cam.brand]) groups[cam.brand] = [];
-            groups[cam.brand].push(cam);
-        });
+        cameras.forEach(cam => { if (!groups[cam.brand]) groups[cam.brand] = []; groups[cam.brand].push(cam); });
 
-        const fragment = document.createDocumentFragment();
+        const frag = document.createDocumentFragment();
         Object.keys(groups).sort(Utils.compareText).forEach(brand => {
-            const brandCameras = groups[brand].sort(sortByPriority);
-
+            const brandCams = groups[brand].sort(sortByPriority);
             const group = document.createElement('div');
             group.className = 'brand-group';
 
-            const header = document.createElement('div');
-            header.className = 'brand-group-header';
-            const titleSpan = document.createElement('span');
-            titleSpan.textContent = brand;
-            const countSpan = document.createElement('span');
-            countSpan.className = 'brand-group-count';
-            countSpan.textContent = `${brandCameras.length} cámara${brandCameras.length > 1 ? 's' : ''}`;
-            header.appendChild(titleSpan);
-            header.appendChild(countSpan);
-            header.addEventListener('click', () => group.classList.toggle('collapsed'));
+            const hdr = document.createElement('div');
+            hdr.className = 'brand-group-header';
+            const t = document.createElement('span'); t.textContent = brand;
+            const ct = document.createElement('span'); ct.className = 'brand-group-count'; ct.textContent = `${brandCams.length} cámara${brandCams.length > 1 ? 's' : ''}`;
+            hdr.appendChild(t); hdr.appendChild(ct);
+            hdr.addEventListener('click', () => group.classList.toggle('collapsed'));
 
             const content = document.createElement('div');
             content.className = 'brand-group-content';
 
             const table = document.createElement('table');
-            table.innerHTML = `
-                <thead><tr>
-                    <th>Modelo</th>
-                    <th>Nº Serie</th>
-                    <th>Estado</th>
-                    <th>Velocidades</th>
-                    <th>Carrete</th>
-                    <th>Con Carrete</th>
-                    <th>Observaciones</th>
-                </tr></thead>
-            `;
-
+            table.innerHTML = `<thead><tr><th>Modelo</th><th>Nº Serie</th><th>Estado</th><th>Velocidades</th><th>Carrete</th><th>Con Carrete</th><th>Observaciones</th></tr></thead>`;
             const tbody = document.createElement('tbody');
-            brandCameras.forEach(cam => {
+
+            brandCams.forEach(cam => {
                 const tr = document.createElement('tr');
                 if (cam.status === 'error') tr.classList.add('urgent');
                 if (cam.loaded === 'yes')   tr.classList.add('has-film');
-
                 const st = CONFIG.status[cam.status];
                 const sp = CONFIG.speeds[cam.speeds ?? CONFIG.defaults.speeds];
                 const fm = CONFIG.film[cam.film ?? CONFIG.defaults.film];
                 const ld = CONFIG.loaded[cam.loaded ?? CONFIG.defaults.loaded];
-
                 tr.appendChild(createCell(cam.model,  'col-model'));
                 tr.appendChild(createCell(cam.serial, 'col-serial'));
-
-                const statusCell = document.createElement('td');
-                statusCell.appendChild(createBadge(st.label, st.cssClass));
-                tr.appendChild(statusCell);
-
-                const speedsCell = document.createElement('td');
-                speedsCell.appendChild(createBadge(sp.label, sp.cssClass));
-                tr.appendChild(speedsCell);
-
-                const filmCell = document.createElement('td');
-                filmCell.appendChild(createBadge(fm.label, fm.cssClass));
-                tr.appendChild(filmCell);
-
-                const loadedCell = document.createElement('td');
-                loadedCell.appendChild(createBadge(ld.label, ld.cssClass));
-                tr.appendChild(loadedCell);
-
+                [st, sp, fm, ld].forEach(cfg => { const td = document.createElement('td'); td.appendChild(createBadge(cfg.label, cfg.cssClass)); tr.appendChild(td); });
                 tr.appendChild(createCell(cam.notes, 'col-notes'));
                 tbody.appendChild(tr);
             });
 
             table.appendChild(tbody);
             content.appendChild(table);
-            group.appendChild(header);
+            group.appendChild(hdr);
             group.appendChild(content);
-            fragment.appendChild(group);
+            frag.appendChild(group);
         });
 
-        groupedContainer.appendChild(fragment);
+        gc.appendChild(frag);
         DOM.countDisplay.textContent = cameras.length;
     };
 
     const updateHeaderIcons = () => {
         DOM.headers.forEach(th => {
             const col = th.dataset.col;
-            const isActive = col === state.sort.column;
+            const active = col === state.sort.column;
             const icon = th.querySelector('.sort-icon');
-            th.classList.toggle('active', isActive);
-            th.setAttribute('aria-sort', isActive ? (state.sort.direction === 'asc' ? 'ascending' : 'descending') : 'none');
-            icon.textContent = isActive ? (state.sort.direction === 'asc' ? '↑' : '↓') : '⇅';
+            th.classList.toggle('active', active);
+            th.setAttribute('aria-sort', active ? (state.sort.direction === 'asc' ? 'ascending' : 'descending') : 'none');
+            icon.textContent = active ? (state.sort.direction === 'asc' ? '↑' : '↓') : '⇅';
         });
     };
 
     const render = () => {
-        const filters = getFilters();
+        const filters  = getFilters();
         const filtered = filterCameras(CAMERAS, filters);
         const sorted   = sortCameras(filtered, state.sort);
-
         renderStats(CAMERAS);
 
-        const groupedContainer = document.getElementById('groupedTableContainer');
-
+        const gc = document.getElementById('groupedTableContainer');
         if (state.groupByBrand && state.view === 'table') {
             DOM.tableContainer.style.display = 'none';
-            if (groupedContainer) groupedContainer.style.display = '';
+            if (gc) gc.style.display = '';
             renderGroupedTable(sorted);
         } else if (state.view === 'table') {
-            if (groupedContainer) groupedContainer.style.display = 'none';
+            if (gc) gc.style.display = 'none';
             DOM.tableContainer.style.display = '';
             renderTable(sorted);
         } else {
-            if (groupedContainer) groupedContainer.style.display = 'none';
+            if (gc) gc.style.display = 'none';
             DOM.tableContainer.style.display = 'none';
             renderCards(sorted);
         }
-
         updateHeaderIcons();
     };
 
@@ -1440,38 +1441,29 @@
     // ============================================
     const Storage = {
         save() {
-            const payload = {
-                sort: state.sort,
-                view: state.view,
-                theme: state.theme,
-                groupByBrand: state.groupByBrand,
-                filters: {
-                    search: DOM.searchInput.value,
-                    brand:  DOM.brandFilter.value,
-                    status: DOM.statusFilter.value,
-                    speeds: DOM.speedsFilter.value,
-                    film:   DOM.filmFilter.value
-                }
-            };
-            try { localStorage.setItem(CONFIG.storageKey, JSON.stringify(payload)); } catch {}
+            try {
+                localStorage.setItem(CONFIG.storageKey, JSON.stringify({
+                    sort: state.sort, view: state.view, theme: state.theme,
+                    groupByBrand: state.groupByBrand,
+                    filters: { search: DOM.searchInput.value, brand: DOM.brandFilter.value,
+                               status: DOM.statusFilter.value, speeds: DOM.speedsFilter.value, film: DOM.filmFilter.value }
+                }));
+            } catch {}
         },
-
         load() {
             try {
-                const raw = localStorage.getItem(CONFIG.storageKey);
-                if (!raw) return;
-                const data = JSON.parse(raw);
-                if (data?.sort?.column)          state.sort        = data.sort;
-                if (data?.view)                  state.view        = data.view;
-                if (data?.theme)                 state.theme       = data.theme;
-                if (data?.groupByBrand !== undefined) state.groupByBrand = data.groupByBrand;
-                if (data?.filters) {
-                    const f = data.filters;
-                    DOM.searchInput.value  = f.search ?? '';
-                    DOM.brandFilter.value  = f.brand  ?? 'all';
-                    DOM.statusFilter.value = f.status ?? 'all';
-                    DOM.speedsFilter.value = f.speeds ?? 'all';
-                    DOM.filmFilter.value   = f.film   ?? 'all';
+                const d = JSON.parse(localStorage.getItem(CONFIG.storageKey));
+                if (!d) return;
+                if (d.sort?.column)            state.sort        = d.sort;
+                if (d.view)                    state.view        = d.view;
+                if (d.theme)                   state.theme       = d.theme;
+                if (d.groupByBrand !== undefined) state.groupByBrand = d.groupByBrand;
+                if (d.filters) {
+                    DOM.searchInput.value  = d.filters.search ?? '';
+                    DOM.brandFilter.value  = d.filters.brand  ?? 'all';
+                    DOM.statusFilter.value = d.filters.status ?? 'all';
+                    DOM.speedsFilter.value = d.filters.speeds ?? 'all';
+                    DOM.filmFilter.value   = d.filters.film   ?? 'all';
                 }
             } catch {}
         }
@@ -1482,19 +1474,14 @@
     // ============================================
     const loadCameras = async () => {
         try {
-            const response = await fetch('cameras.json');
-            if (!response.ok) throw new Error('Error al cargar datos');
-            const data = await response.json();
+            const res = await fetch('cameras.json');
+            if (!res.ok) throw new Error();
+            const data = await res.json();
             CAMERAS = Object.freeze(data);
             searchIndexes = new Map(CAMERAS.map(cam => [cam, Utils.buildSearchIndex(cam)]));
             return true;
-        } catch (error) {
-            console.error('Error cargando cámaras:', error);
-            DOM.tableBody.innerHTML = `
-                <tr><td colspan="8" class="empty-state">
-                    Error al cargar los datos. Por favor, recarga la página.
-                </td></tr>
-            `;
+        } catch {
+            DOM.tableBody.innerHTML = `<tr><td colspan="8" class="empty-state">Error al cargar los datos. Recarga la página.</td></tr>`;
             return false;
         }
     };
@@ -1504,50 +1491,26 @@
     // ============================================
     const populateBrandFilter = () => {
         const brands = [...new Set(CAMERAS.map(c => c.brand))].sort(Utils.compareText);
-        const fragment = document.createDocumentFragment();
-        const allOption = document.createElement('option');
-        allOption.value = 'all';
-        allOption.textContent = 'Todas las Marcas';
-        fragment.appendChild(allOption);
-        brands.forEach(brand => {
-            const opt = document.createElement('option');
-            opt.value = brand;
-            opt.textContent = brand;
-            fragment.appendChild(opt);
-        });
+        const frag = document.createDocumentFragment();
+        const all = document.createElement('option'); all.value = 'all'; all.textContent = 'Todas las marcas'; frag.appendChild(all);
+        brands.forEach(b => { const o = document.createElement('option'); o.value = b; o.textContent = b; frag.appendChild(o); });
         DOM.brandFilter.innerHTML = '';
-        DOM.brandFilter.appendChild(fragment);
-    };
-
-    const resetFilters = () => {
-        DOM.searchInput.value  = '';
-        DOM.brandFilter.value  = 'all';
-        DOM.statusFilter.value = 'all';
-        DOM.speedsFilter.value = 'all';
-        DOM.filmFilter.value   = 'all';
-        state.sort = { column: 'brand', direction: 'asc' };
-        Storage.save();
-        render();
-        DOM.searchInput.focus();
+        DOM.brandFilter.appendChild(frag);
     };
 
     const applyTheme = () => {
         document.documentElement.setAttribute('data-theme', state.theme);
-        const darkIcon  = DOM.themeBtn.querySelector('.theme-icon-dark');
-        const lightIcon = DOM.themeBtn.querySelector('.theme-icon-light');
-        if (state.theme === 'dark') {
-            darkIcon.style.display  = '';
-            lightIcon.style.display = 'none';
-        } else {
-            darkIcon.style.display  = 'none';
-            lightIcon.style.display = '';
-        }
+        const di = DOM.themeBtn.querySelector('.theme-icon-dark');
+        const li = DOM.themeBtn.querySelector('.theme-icon-light');
+        di.style.display = state.theme === 'dark' ? '' : 'none';
+        li.style.display = state.theme === 'dark' ? 'none' : '';
     };
 
-    const toggleTheme = () => {
-        state.theme = state.theme === 'dark' ? 'light' : 'dark';
-        applyTheme();
-        Storage.save();
+    const resetFilters = () => {
+        DOM.searchInput.value = ''; DOM.brandFilter.value = 'all';
+        DOM.statusFilter.value = 'all'; DOM.speedsFilter.value = 'all'; DOM.filmFilter.value = 'all';
+        state.sort = { column: 'brand', direction: 'asc' };
+        Storage.save(); render(); DOM.searchInput.focus();
     };
 
     const toggleView = (view) => {
@@ -1556,58 +1519,30 @@
         DOM.tableViewBtn.classList.toggle('active', view === 'table');
         DOM.cardsViewBtn.classList.toggle('active', view === 'cards');
         DOM.groupByLabel.classList.toggle('hidden', view === 'cards');
-        Storage.save();
-        render();
-    };
-
-    const toggleGrouping = () => {
-        state.groupByBrand = DOM.groupByBrand.checked;
-        Storage.save();
-        render();
+        Storage.save(); render();
     };
 
     const exportToCSV = () => {
-        const filters = getFilters();
-        const filtered = filterCameras(CAMERAS, filters);
-        const sorted   = sortCameras(filtered, state.sort);
-
-        const headers = ['Marca','Modelo','Nº Serie','Estado','Velocidades','Carrete','Con Carrete','Observaciones'];
-        const rows = sorted.map(cam => {
-            const st = CONFIG.status[cam.status]?.label ?? '';
-            const sp = CONFIG.speeds[cam.speeds ?? CONFIG.defaults.speeds]?.label ?? '';
-            const fm = CONFIG.film[cam.film ?? CONFIG.defaults.film]?.label ?? '';
-            const ld = CONFIG.loaded[cam.loaded ?? CONFIG.defaults.loaded]?.label ?? '';
-            return [cam.brand, cam.model, cam.serial, st, sp, fm, ld, cam.notes]
-                .map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(',');
-        });
-
-        const csv  = [headers.join(','), ...rows].join('\n');
-        const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8;' });
-        const link = document.createElement('a');
-        link.href  = URL.createObjectURL(blob);
-        link.download = `camaras_${new Date().toISOString().split('T')[0]}.csv`;
-        link.click();
-        URL.revokeObjectURL(link.href);
-    };
-
-    const handleSort = (column) => {
-        if (state.sort.column === column) {
-            state.sort.direction = state.sort.direction === 'asc' ? 'desc' : 'asc';
-        } else {
-            state.sort.column    = column;
-            state.sort.direction = 'asc';
-        }
-        Storage.save();
-        render();
+        const sorted = sortCameras(filterCameras(CAMERAS, getFilters()), state.sort);
+        const hdrs = ['Marca','Modelo','Nº Serie','Estado','Velocidades','Carrete','Con Carrete','Observaciones'];
+        const rows = sorted.map(cam => [
+            cam.brand, cam.model, cam.serial,
+            CONFIG.status[cam.status]?.label ?? '',
+            CONFIG.speeds[cam.speeds ?? CONFIG.defaults.speeds]?.label ?? '',
+            CONFIG.film[cam.film ?? CONFIG.defaults.film]?.label ?? '',
+            CONFIG.loaded[cam.loaded ?? CONFIG.defaults.loaded]?.label ?? '',
+            cam.notes
+        ].map(c => `"${String(c).replace(/"/g,'""')}"`).join(','));
+        const blob = new Blob(['\ufeff' + [hdrs.join(','), ...rows].join('\n')], { type: 'text/csv;charset=utf-8;' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = `camaras_${new Date().toISOString().split('T')[0]}.csv`;
+        a.click(); URL.revokeObjectURL(a.href);
     };
 
     const init = async () => {
-        DOM.tableBody.innerHTML = `
-            <tr><td colspan="8" class="empty-state">Cargando datos…</td></tr>
-        `;
-
-        const loaded = await loadCameras();
-        if (!loaded) return;
+        DOM.tableBody.innerHTML = `<tr><td colspan="8" class="empty-state">Cargando datos…</td></tr>`;
+        if (!(await loadCameras())) return;
 
         populateBrandFilter();
         Storage.load();
@@ -1616,44 +1551,31 @@
         document.body.classList.toggle('cards-mode', state.view === 'cards');
         DOM.tableViewBtn.classList.toggle('active', state.view === 'table');
         DOM.cardsViewBtn.classList.toggle('active', state.view === 'cards');
-        DOM.groupByLabel.classList.toggle('hidden',  state.view === 'cards');
+        DOM.groupByLabel.classList.toggle('hidden', state.view === 'cards');
         DOM.groupByBrand.checked = state.groupByBrand;
 
-        // Event listeners
-        DOM.searchInput.addEventListener('input',  () => { Storage.save(); scheduleRender(); });
-        [DOM.brandFilter, DOM.statusFilter, DOM.speedsFilter, DOM.filmFilter].forEach(el => {
-            el.addEventListener('change', () => { Storage.save(); render(); });
-        });
+        renderBrandChart();
 
+        DOM.searchInput.addEventListener('input',  () => { Storage.save(); scheduleRender(); });
+        [DOM.brandFilter, DOM.statusFilter, DOM.speedsFilter, DOM.filmFilter].forEach(el =>
+            el.addEventListener('change', () => { Storage.save(); render(); })
+        );
         DOM.resetBtn.addEventListener('click',      resetFilters);
         DOM.exportBtn.addEventListener('click',     exportToCSV);
         DOM.printBtn.addEventListener('click',      () => window.print());
-        DOM.themeBtn.addEventListener('click',      toggleTheme);
+        DOM.themeBtn.addEventListener('click',      () => { state.theme = state.theme === 'dark' ? 'light' : 'dark'; applyTheme(); Storage.save(); });
         DOM.tableViewBtn.addEventListener('click',  () => toggleView('table'));
         DOM.cardsViewBtn.addEventListener('click',  () => toggleView('cards'));
-        DOM.groupByBrand.addEventListener('change', toggleGrouping);
+        DOM.groupByBrand.addEventListener('change', () => { state.groupByBrand = DOM.groupByBrand.checked; Storage.save(); render(); });
 
         const thead = document.querySelector('thead');
-        thead.addEventListener('click', e => {
-            const th = e.target.closest('th[data-col]');
-            if (th) handleSort(th.dataset.col);
-        });
-        thead.addEventListener('keydown', e => {
-            const th = e.target.closest('th[data-col]');
-            if (th && (e.key === 'Enter' || e.key === ' ')) {
-                e.preventDefault();
-                handleSort(th.dataset.col);
-            }
-        });
+        thead.addEventListener('click', e => { const th = e.target.closest('th[data-col]'); if (th) { state.sort.column === th.dataset.col ? (state.sort.direction = state.sort.direction === 'asc' ? 'desc' : 'asc') : (state.sort.column = th.dataset.col, state.sort.direction = 'asc'); Storage.save(); render(); } });
+        thead.addEventListener('keydown', e => { const th = e.target.closest('th[data-col]'); if (th && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); th.click(); } });
 
         render();
     };
 
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', init);
-    } else {
-        init();
-    }
+    document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', init) : init();
 })();
 </script>
 </body>
