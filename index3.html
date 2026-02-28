@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cámaras Analógicas · Actividad</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📷</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg:            #f1f5f9;
+            --surface:       #ffffff;
+            --surface-alt:   #f8fafc;
+            --border:        #e2e8f0;
+            --border-strong: #cbd5e1;
+            --text:          #0f172a;
+            --text-muted:    #64748b;
+            --text-faint:    #94a3b8;
+            --accent:        #0ea5e9;
+            --accent-ring:   rgba(14,165,233,0.15);
+            --shadow-sm:     0 1px 2px rgba(15,23,42,.06), 0 1px 3px rgba(15,23,42,.08);
+            --shadow-md:     0 4px 6px rgba(15,23,42,.04), 0 10px 15px rgba(15,23,42,.06);
+            --radius:        10px;
+            --radius-sm:     6px;
+            --tl-line:       #e2e8f0;
+            --tl-line-w:     2px;
+            --tl-offset:     32px;
+            --tl-dot-size:   20px;
+        }
+
+        [data-theme="dark"] {
+            --bg:            #06101c;
+            --surface:       #0d1b2e;
+            --surface-alt:   #0a1525;
+            --border:        #1e2d42;
+            --border-strong: #2a3f5a;
+            --text:          #e2e8f0;
+            --text-muted:    #64748b;
+            --text-faint:    #334155;
+            --accent:        #38bdf8;
+            --accent-ring:   rgba(56,189,248,0.12);
+            --shadow-sm:     0 1px 2px rgba(0,0,0,.5), 0 1px 3px rgba(0,0,0,.4);
+            --shadow-md:     0 4px 6px rgba(0,0,0,.5), 0 10px 15px rgba(0,0,0,.3);
+            --tl-line:       #1e2d42;
+        }
+
+        body {
+            font-family: 'Sora', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            font-size: 14px;
+            line-height: 1.5;
+            min-height: 100vh;
+        }
+
+        /* ── HEADER ── */
+        .app-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .header-row {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 11px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            flex-shrink: 0;
+        }
+
+        .brand-dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: var(--accent);
+            flex-shrink: 0;
+        }
+
+        .brand h1 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            white-space: nowrap;
+        }
+
+        .search-wrap {
+            flex: 1;
+            position: relative;
+        }
+
+        .search-wrap svg {
+            position: absolute;
+            left: 9px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 14px;
+            height: 14px;
+            color: var(--text-muted);
+            pointer-events: none;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 7px 12px 7px 30px;
+            background: var(--surface-alt);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            font-family: inherit;
+            font-size: 0.83rem;
+            color: var(--text);
+            outline: none;
+            transition: border-color .15s, box-shadow .15s;
+        }
+
+        .search-input::placeholder { color: var(--text-faint); }
+        .search-input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-ring);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            flex-shrink: 0;
+        }
+
+        .hbtn {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 6px 9px;
+            background: var(--surface-alt);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            color: var(--text-muted);
+            font-family: inherit;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            white-space: nowrap;
+            transition: background .12s, color .12s, border-color .12s;
+        }
+
+        .hbtn:hover { background: var(--border); color: var(--text); }
+
+        /* ── DISTRIBUTION BAR ── */
+        .dist-bar-row {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 9px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .dist-bar {
+            flex: 1;
+            height: 6px;
+            border-radius: 99px;
+            overflow: hidden;
+            background: var(--border);
+            display: flex;
+            gap: 1.5px;
+        }
+
+        .dist-seg {
+            height: 100%;
+            border-radius: 0;
+            transition: width .35s ease;
+            flex-shrink: 0;
+        }
+
+        .dist-legend {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            white-space: nowrap;
+        }
+
+        .legend-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        /* ── BRAND FILTER ── */
+        .brand-bar {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 7px 20px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            overflow-x: auto;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .brand-label {
+            font-size: 0.68rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: .07em;
+            color: var(--text-faint);
+            flex-shrink: 0;
+        }
+
+        .bchip {
+            padding: 2px 10px;
+            border: 1px solid var(--border);
+            border-radius: 99px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            font-family: inherit;
+            color: var(--text-muted);
+            background: transparent;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all .12s;
+        }
+
+        .bchip:hover, .bchip.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #fff;
+        }
+
+        /* ── MAIN ── */
+        .main {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 28px 20px 80px;
+        }
+
+        /* ── TIMELINE ── */
+        .timeline {
+            position: relative;
+            padding-left: var(--tl-offset);
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: calc(var(--tl-dot-size) / 2 - var(--tl-line-w) / 2);
+            top: 12px;
+            bottom: 12px;
+            width: var(--tl-line-w);
+            background: var(--tl-line);
+            border-radius: 2px;
+        }
+
+        /* ── SECTION ── */
+        .tl-section {
+            position: relative;
+            margin-bottom: 32px;
+        }
+
+        .tl-section:last-child { margin-bottom: 0; }
+
+        .tl-dot {
+            position: absolute;
+            left: calc(-1 * var(--tl-offset));
+            top: 7px;
+            width: var(--tl-dot-size);
+            height: var(--tl-dot-size);
+            border-radius: 50%;
+            background: var(--sec-color, #64748b);
+            box-shadow: 0 0 0 4px var(--bg);
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .tl-dot::after {
+            content: '';
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.9);
+        }
+
+        /* Pulsing animation for "active" section (con carrete) */
+        .tl-section.is-active .tl-dot {
+            animation: dotPulse 2.5s ease-in-out infinite;
+        }
+
+        @keyframes dotPulse {
+            0%, 100% { box-shadow: 0 0 0 4px var(--bg); }
+            50%       { box-shadow: 0 0 0 4px var(--bg), 0 0 0 8px rgba(16,185,129,.2); }
+        }
+
+        .tl-section-head {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding-bottom: 8px;
+            margin-bottom: 8px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .sec-name {
+            font-size: 0.68rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .09em;
+            color: var(--sec-color, #64748b);
+        }
+
+        .sec-count {
+            font-size: 0.68rem;
+            font-weight: 700;
+            color: var(--text-faint);
+            background: var(--surface-alt);
+            border: 1px solid var(--border);
+            border-radius: 99px;
+            padding: 0 6px;
+            line-height: 17px;
+        }
+
+        .sec-toggle {
+            margin-left: auto;
+            background: none;
+            border: none;
+            color: var(--text-faint);
+            font-size: 0.68rem;
+            font-family: inherit;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 2px 6px;
+            border-radius: 4px;
+            transition: background .12s, color .12s;
+        }
+
+        .sec-toggle:hover { background: var(--border); color: var(--text-muted); }
+
+        /* ── CAMERA ENTRIES ── */
+        .sec-entries {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            transition: opacity .15s;
+        }
+
+        .sec-entries.is-collapsed { display: none; }
+
+        .cam-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            cursor: pointer;
+            transition: box-shadow .15s, border-color .15s, transform .12s;
+            animation: slideIn .2s ease both;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-5px); }
+            to   { opacity: 1; transform: translateX(0); }
+        }
+
+        .cam-card:hover {
+            box-shadow: var(--shadow-md);
+            border-color: var(--border-strong);
+            transform: translateX(3px);
+        }
+
+        .cam-card.is-open {
+            border-color: var(--sec-color, var(--border));
+        }
+
+        .cam-card-main {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 13px;
+        }
+
+        .cam-stripe {
+            width: 3px;
+            height: 34px;
+            border-radius: 2px;
+            background: var(--sec-color, #64748b);
+            flex-shrink: 0;
+        }
+
+        .cam-meta {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .cam-name {
+            font-size: 0.875rem;
+            font-weight: 600;
+            letter-spacing: -.01em;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .cam-serial {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.67rem;
+            color: var(--text-muted);
+            margin-top: 1px;
+        }
+
+        .cam-tags {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            flex-shrink: 0;
+        }
+
+        .ctag {
+            font-size: 0.67rem;
+            font-weight: 600;
+            padding: 2px 7px;
+            border-radius: 4px;
+            border: 1px solid transparent;
+            white-space: nowrap;
+        }
+
+        .ctag-loaded {
+            background: rgba(16,185,129,.09);
+            color: #10b981;
+            border-color: rgba(16,185,129,.22);
+        }
+
+        .ctag-speeds {
+            background: rgba(239,68,68,.08);
+            color: #ef4444;
+            border-color: rgba(239,68,68,.2);
+        }
+
+        .ctag-film {
+            background: var(--surface-alt);
+            color: var(--text-muted);
+            border-color: var(--border);
+        }
+
+        .cam-chevron {
+            color: var(--text-faint);
+            font-size: 0.7rem;
+            line-height: 1;
+            flex-shrink: 0;
+            transition: transform .2s;
+        }
+
+        .cam-card.is-open .cam-chevron { transform: rotate(180deg); }
+
+        /* Expanded notes */
+        .cam-notes {
+            display: none;
+            padding: 9px 13px 11px calc(13px + 3px + 10px);
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border);
+            line-height: 1.65;
+        }
+
+        .cam-card.is-open .cam-notes { display: block; }
+
+        /* ── EMPTY / NO RESULTS ── */
+        .no-results {
+            text-align: center;
+            padding: 64px 20px;
+            color: var(--text-muted);
+        }
+
+        .no-results h3 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 4px;
+        }
+
+        /* ── PRINT STYLES ── */
+        @media print {
+            .app-header, .dist-bar-row, .brand-bar { display: none !important; }
+            body { background: #fff; font-size: 11px; }
+            .main { padding: 0; max-width: 100%; }
+            .cam-card { break-inside: avoid; box-shadow: none; border: 1px solid #ddd; margin-bottom: 3px; }
+            .cam-card.is-open .cam-notes { display: block; }
+            .cam-card .cam-notes { display: block !important; }
+            .sec-toggle { display: none; }
+            .sec-entries.is-collapsed { display: flex !important; }
+        }
+
+        /* ── SCROLLBARS ── */
+        ::-webkit-scrollbar { width: 5px; height: 5px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 3px; }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 560px) {
+            .dist-legend { display: none; }
+            .cam-tags { display: none; }
+            .brand-label { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<header class="app-header">
+    <!-- Title + search + actions -->
+    <div class="header-row">
+        <div class="brand">
+            <span class="brand-dot"></span>
+            <h1>Cámaras</h1>
+        </div>
+
+        <div class="search-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+            <input type="search" class="search-input" id="searchInput" placeholder="Buscar cámara, marca, serie…">
+        </div>
+
+        <div class="header-actions">
+            <button class="hbtn" id="exportBtn" title="Exportar CSV">↓ CSV</button>
+            <button class="hbtn" id="printBtn" title="Imprimir">⎙</button>
+            <button class="hbtn" id="themeBtn" title="Cambiar tema">◐</button>
+            <a href="index.html"  class="hbtn" title="Versión 1">v1</a>
+            <a href="index2.html" class="hbtn" title="Versión 2">v2</a>
+        </div>
+    </div>
+
+    <!-- Distribution bar -->
+    <div class="dist-bar-row">
+        <div class="dist-bar" id="distBar"></div>
+        <div class="dist-legend" id="distLegend"></div>
+    </div>
+
+    <!-- Brand filter -->
+    <div class="brand-bar">
+        <span class="brand-label">Marca</span>
+        <div id="brandChips" style="display:contents"></div>
+    </div>
+</header>
+
+<main class="main">
+    <div class="timeline" id="timeline"></div>
+</main>
+
+<script>
+(() => {
+    'use strict';
+
+    /* ── CONFIG ── */
+    const DATA_URL    = 'cameras.json';
+    const STORAGE_KEY = 'cameraCollection.v4';
+
+    const SECTIONS = [
+        {
+            id: 'active',
+            label: 'Con carrete',
+            color: '#10b981',
+            cls: 'is-active',
+            filter: c => c.loaded === 'yes',
+        },
+        {
+            id: 'pending',
+            label: 'Por revelar',
+            color: '#8b5cf6',
+            cls: '',
+            filter: c => c.status === 'pending' && c.loaded !== 'yes',
+        },
+        {
+            id: 'repair',
+            label: 'En el taller',
+            color: '#f97316',
+            cls: '',
+            filter: c => c.status === 'repair' && c.loaded !== 'yes',
+        },
+        {
+            id: 'error',
+            label: 'Para reparar',
+            color: '#ef4444',
+            cls: '',
+            filter: c => c.status === 'error' && c.loaded !== 'yes',
+        },
+        {
+            id: 'ok',
+            label: 'Funcionales',
+            color: '#0ea5e9',
+            cls: '',
+            filter: c => c.status === 'ok' && c.loaded !== 'yes',
+        },
+        {
+            id: 'warning',
+            label: 'Con detalles',
+            color: '#f59e0b',
+            cls: '',
+            filter: c => c.status === 'warning' && c.loaded !== 'yes',
+        },
+    ];
+
+    /* ── STATE ── */
+    let cameras = [];
+    let state = { search: '', brand: null, theme: 'light' };
+
+    try {
+        const s = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+        Object.assign(state, s);
+    } catch {}
+
+    document.documentElement.dataset.theme = state.theme;
+
+    /* ── HELPERS ── */
+    const $ = id => document.getElementById(id);
+    const save = () => localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    const debounce = (fn, ms) => { let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); }; };
+
+    const getFiltered = () => {
+        let list = cameras;
+        if (state.search) {
+            const q = state.search.toLowerCase();
+            list = list.filter(c => [c.brand, c.model, c.serial, c.notes].some(v => v?.toLowerCase().includes(q)));
+        }
+        if (state.brand) {
+            list = list.filter(c => c.brand === state.brand);
+        }
+        return list;
+    };
+
+    /* ── DISTRIBUTION BAR ── */
+    const renderDist = list => {
+        const total = list.length;
+        const bar    = $('distBar');
+        const legend = $('distLegend');
+        bar.innerHTML = '';
+        legend.innerHTML = '';
+
+        if (total === 0) return;
+
+        SECTIONS.forEach(sec => {
+            const n = list.filter(sec.filter).length;
+            if (n === 0) return;
+            const pct = (n / total * 100).toFixed(2);
+
+            const seg = document.createElement('div');
+            seg.className = 'dist-seg';
+            seg.style.background = sec.color;
+            seg.style.width = pct + '%';
+            seg.title = `${sec.label}: ${n}`;
+            bar.appendChild(seg);
+
+            const item = document.createElement('div');
+            item.className = 'legend-item';
+            item.innerHTML = `<span class="legend-dot" style="background:${sec.color}"></span>${n}`;
+            item.title = sec.label;
+            legend.appendChild(item);
+        });
+    };
+
+    /* ── BRAND CHIPS ── */
+    const renderBrands = () => {
+        const wrap = $('brandChips');
+        wrap.innerHTML = '';
+
+        const brands = [...new Set(cameras.map(c => c.brand))].sort();
+
+        const all = document.createElement('button');
+        all.className = 'bchip' + (!state.brand ? ' active' : '');
+        all.textContent = 'Todas';
+        all.onclick = () => { state.brand = null; save(); render(); };
+        wrap.appendChild(all);
+
+        brands.forEach(b => {
+            const chip = document.createElement('button');
+            chip.className = 'bchip' + (state.brand === b ? ' active' : '');
+            chip.textContent = b;
+            chip.onclick = () => { state.brand = b; save(); render(); };
+            wrap.appendChild(chip);
+        });
+    };
+
+    /* ── CAMERA CARD ── */
+    const makeCard = (cam, color, delay) => {
+        const card = document.createElement('div');
+        card.className = 'cam-card';
+        card.style.setProperty('--sec-color', color);
+        card.style.animationDelay = `${delay}s`;
+
+        /* Main row */
+        const main = document.createElement('div');
+        main.className = 'cam-card-main';
+
+        const stripe = document.createElement('div');
+        stripe.className = 'cam-stripe';
+
+        const meta = document.createElement('div');
+        meta.className = 'cam-meta';
+
+        const name = document.createElement('div');
+        name.className = 'cam-name';
+        name.textContent = `${cam.brand} ${cam.model}`;
+
+        const serial = document.createElement('div');
+        serial.className = 'cam-serial';
+        const sn = cam.serial && cam.serial !== '-' ? `#${cam.serial}` : '—';
+        serial.textContent = sn;
+
+        meta.appendChild(name);
+        meta.appendChild(serial);
+
+        const tags = document.createElement('div');
+        tags.className = 'cam-tags';
+
+        if (cam.loaded === 'yes') {
+            const t = document.createElement('span');
+            t.className = 'ctag ctag-loaded';
+            t.textContent = '● Cargada';
+            tags.appendChild(t);
+        }
+
+        if (cam.speeds === 'bad') {
+            const t = document.createElement('span');
+            t.className = 'ctag ctag-speeds';
+            t.textContent = '↯ Veloc.';
+            tags.appendChild(t);
+        }
+
+        if (cam.film === 'yes') {
+            const t = document.createElement('span');
+            t.className = 'ctag ctag-film';
+            t.textContent = '35mm';
+            tags.appendChild(t);
+        }
+
+        const chev = document.createElement('span');
+        chev.className = 'cam-chevron';
+        chev.textContent = '▾';
+
+        main.appendChild(stripe);
+        main.appendChild(meta);
+        main.appendChild(tags);
+        main.appendChild(chev);
+
+        /* Notes (expanded) */
+        const notes = document.createElement('div');
+        notes.className = 'cam-notes';
+        notes.textContent = cam.notes || '—';
+
+        card.appendChild(main);
+        if (cam.notes) card.appendChild(notes);
+
+        card.addEventListener('click', () => card.classList.toggle('is-open'));
+
+        return card;
+    };
+
+    /* ── TIMELINE ── */
+    const renderTimeline = list => {
+        const tl = $('timeline');
+        tl.innerHTML = '';
+
+        let any = false;
+
+        SECTIONS.forEach(sec => {
+            const cams = list.filter(sec.filter);
+            if (cams.length === 0) return;
+            any = true;
+
+            const section = document.createElement('div');
+            section.className = `tl-section${sec.cls ? ' ' + sec.cls : ''}`;
+            section.style.setProperty('--sec-color', sec.color);
+
+            /* Dot */
+            const dot = document.createElement('div');
+            dot.className = 'tl-dot';
+
+            /* Header */
+            const head = document.createElement('div');
+            head.className = 'tl-section-head';
+
+            const sname = document.createElement('span');
+            sname.className = 'sec-name';
+            sname.textContent = sec.label;
+
+            const scount = document.createElement('span');
+            scount.className = 'sec-count';
+            scount.textContent = cams.length;
+
+            const toggle = document.createElement('button');
+            toggle.className = 'sec-toggle';
+            toggle.textContent = 'ocultar';
+
+            head.appendChild(sname);
+            head.appendChild(scount);
+            head.appendChild(toggle);
+
+            /* Entries */
+            const entries = document.createElement('div');
+            entries.className = 'sec-entries';
+
+            cams.forEach((cam, i) => entries.appendChild(makeCard(cam, sec.color, i * 0.03)));
+
+            toggle.onclick = e => {
+                e.stopPropagation();
+                const collapsed = entries.classList.toggle('is-collapsed');
+                toggle.textContent = collapsed ? 'mostrar' : 'ocultar';
+            };
+
+            section.appendChild(dot);
+            section.appendChild(head);
+            section.appendChild(entries);
+            tl.appendChild(section);
+        });
+
+        if (!any) {
+            tl.innerHTML = `
+                <div class="no-results">
+                    <h3>Sin resultados</h3>
+                    <p>No hay cámaras que coincidan con la búsqueda.</p>
+                </div>`;
+        }
+    };
+
+    /* ── MAIN RENDER ── */
+    const render = () => {
+        const list = getFiltered();
+        renderDist(list);
+        renderBrands();
+        renderTimeline(list);
+    };
+
+    /* ── CSV EXPORT ── */
+    const exportCSV = () => {
+        const list = getFiltered();
+        const headers = ['Marca', 'Modelo', 'Serie', 'Estado', 'Velocidades', 'Carrete', 'Cargada', 'Notas'];
+        const statusLabel = { ok: 'Funcional', warning: 'Detalles', error: 'Reparar', repair: 'En reparación', pending: 'Por Revelar' };
+        const rows = list.map(c => [
+            c.brand, c.model, c.serial, statusLabel[c.status] || c.status,
+            c.speeds, c.film === 'yes' ? 'Sí' : 'No',
+            c.loaded === 'yes' ? 'Sí' : 'No', c.notes
+        ].map(v => `"${String(v ?? '').replace(/"/g, '""')}"`).join(','));
+        const csv = [headers.join(','), ...rows].join('\n');
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' }));
+        a.download = 'camaras.csv';
+        a.click();
+    };
+
+    /* ── EVENTS ── */
+    $('searchInput').value = state.search;
+    $('searchInput').addEventListener('input', debounce(e => {
+        state.search = e.target.value.trim();
+        save();
+        render();
+    }, 200));
+
+    $('themeBtn').addEventListener('click', () => {
+        state.theme = state.theme === 'light' ? 'dark' : 'light';
+        document.documentElement.dataset.theme = state.theme;
+        save();
+    });
+
+    $('exportBtn').addEventListener('click', exportCSV);
+    $('printBtn').addEventListener('click', () => window.print());
+
+    /* ── INIT ── */
+    fetch(DATA_URL)
+        .then(r => r.json())
+        .then(data => { cameras = data; render(); })
+        .catch(err => {
+            $('timeline').innerHTML = `<div class="no-results"><h3>Error al cargar los datos</h3><p>${err.message}</p></div>`;
+        });
+
+})();
+</script>
+</body>
+</html>
